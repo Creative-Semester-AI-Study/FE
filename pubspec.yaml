@@ -2,7 +2,7 @@ name: study_helper
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -31,10 +31,15 @@ dependencies:
   flutter:
     sdk: flutter
 
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
+  dialog_flowtter: ^0.3.3
+  hexcolor: ^3.0.1
+  stylish_bottom_bar: ^1.1.0
+  flutter_svg: ^2.0.9
+  gap: ^3.0.1
+  animations: ^2.0.11
 
 dev_dependencies:
   flutter_test:
@@ -52,7 +57,6 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -88,3 +92,50 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+  assets:
+    - assets/fonts/suit/
+    - assets/images/
+    - assets/images/profiles/
+    - assets/images/buttons/
+    - assets/images/bottom_bar/icons/
+    - assets/images/bottom_bar/letter_icon/
+
+  fonts:
+    - family: SUIT
+      fonts:
+        - asset: assets/fonts/suit/SUIT-Thin.ttf
+          weight: 100
+        - asset: assets/fonts/suit/SUIT-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/suit/SUIT-Light.ttf
+          weight: 300
+        - asset: assets/fonts/suit/SUIT-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/suit/SUIT-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/suit/SUIT-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/suit/SUIT-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/suit/SUIT-ExtraBold.ttf
+          weight: 800
+
+fonts:
+  - family: Pretendard
+    fonts:
+      - asset: assets/fonts/pretendard/Pretendard-Thin.ttf
+        weight: 100
+      - asset: assets/fonts/pretendard/Pretendard-ExtraLight.ttf
+        weight: 200
+      - asset: assets/fonts/pretendard/Pretendard-Light.ttf
+        weight: 300
+      - asset: assets/fonts/pretendard/Pretendard-Regular.ttf
+        weight: 400
+      - asset: assets/fonts/pretendard/Pretendard-Medium.ttf
+        weight: 500
+      - asset: assets/fonts/pretendard/Pretendard-SemiBold.ttf
+        weight: 600
+      - asset: assets/fonts/pretendard/Pretendard-Bold.ttf
+        weight: 700
+      - asset: assets/fonts/pretendard/Pretendard-ExtraBold.ttf
+        weight: 800
