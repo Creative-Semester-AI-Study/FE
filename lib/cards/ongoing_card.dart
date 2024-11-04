@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:study_helper/theme/theme_colors.dart';
 
-Widget OnGoingCard({
+Widget ongoingCard({
   required String subjectName,
   required String timeText,
   required bool isLast,

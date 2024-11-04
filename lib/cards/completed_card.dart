@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:study_helper/theme/theme_colors.dart';
 
-Widget CompletedCard({
+Widget completedCard({
   required String subjectName,
   required String timeText,
   required bool isLast,

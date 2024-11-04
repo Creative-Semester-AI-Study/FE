@@ -113,22 +113,22 @@ class _StudyScreenState extends State<StudyScreen> {
                         const EdgeInsets.only(top: 30, left: 25, right: 25),
                     child: Column(
                       children: [
-                        CompletedCard(
+                        completedCard(
                           subjectName: "알고리즘",
                           timeText: "10:00 ~ 12:00",
                           isLast: false,
                         ),
-                        OnGoingCard(
+                        ongoingCard(
                           subjectName: "운영체제",
                           timeText: "12:00 ~ 14:00",
                           isLast: false,
                         ),
-                        DisabledCard(
+                        disabledCard(
                           subjectName: "데이터베이스",
                           timeText: "14:30 ~ 16:30",
                           isLast: false,
                         ),
-                        DisabledCard(
+                        disabledCard(
                           subjectName: "컴퓨터네트워크",
                           timeText: "17:00 ~ 19:00",
                           isLast: true,
