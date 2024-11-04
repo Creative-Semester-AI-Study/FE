@@ -33,7 +33,7 @@ Widget infoCard(String title, String detail) {
                   title,
                   maxLines: 1,
                   style: const TextStyle(
-                    color: colorMainScreen,
+                    color: colorDefault,
                     overflow: TextOverflow.ellipsis,
                     fontSize: 20,
                     fontWeight: FontWeight.w800,

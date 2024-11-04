@@ -1,8 +1,12 @@
 import 'dart:ui';
 
-const colorBottomBarDefault = Color(0xFF79AEFF);
-const colorBottomBarSelected = Color(0xFF062D5F);
-const colorMainScreen = Color(0xFF1b1b1b);
+const colorBottomBarSelected = Color(0xFF79AEFF);
+const colorFinishedCircle = Color.fromARGB(179, 121, 175, 255);
+const colorLine = Color(0x30062D5F);
+const colorBottomBarDefault = Color(0xFF062D5F);
+const colorDefaultBackground = Color(0xFFF3F3F3);
+const colorDefault = Color(0xFF1b1b1b);
+const colorDisabled = Color.fromARGB(51, 27, 27, 27);
 const colorMainContact = Color(0xFF474747);
 const colorLoginSelectBorder = Color(0xFF656565);
 const colorDefaultBorder = Color(0xFF9f9f9f);

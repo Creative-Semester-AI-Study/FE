@@ -12,7 +12,7 @@ Widget detailCategoryButton(String value) {
         child: Text(
           value,
           style: const TextStyle(
-            color: colorMainScreen,
+            color: colorDefault,
             fontSize: 17,
             fontWeight: FontWeight.w500,
             letterSpacing: -0.3,

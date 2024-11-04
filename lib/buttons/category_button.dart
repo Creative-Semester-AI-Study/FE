@@ -6,7 +6,7 @@ Widget categoryButton(String value) {
     borderRadius: BorderRadius.circular(100),
     child: Container(
       height: 39,
-      color: colorMainScreen,
+      color: colorDefault,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 9),
         child: Text(
