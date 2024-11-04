@@ -81,7 +81,7 @@ Widget OnGoingCard({
                     children: [
                       Text(""), //blank widget for space
                       Text(
-                        "요약 보기 >",
+                        "녹음 시작 >",
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w700,
