@@ -4,7 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:study_helper/theme/theme_colors.dart';
 
-Widget buttonCompleted() {
+Widget CompletedCard({
+  required String subjectName,
+  required String timeText,
+  required bool isLast,
+}) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceAround,
     children: [
@@ -25,8 +29,8 @@ Widget buttonCompleted() {
             ),
             const Gap(10),
             Container(
-              decoration: const BoxDecoration(
-                color: colorLine,
+              decoration: BoxDecoration(
+                color: isLast ? Colors.transparent : colorLine,
               ),
               height: 75,
               width: 1,
@@ -39,34 +43,35 @@ Widget buttonCompleted() {
         flex: 10,
         child: Transform.translate(
           offset: const Offset(0, 0),
-          child: const Card(
+          child: Card(
             elevation: 1,
             color: colorBottomBarSelected,
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   AutoSizeText(
-                    "알고리즘",
+                    subjectName,
                     maxLines: 1,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  Gap(2),
+                  const Gap(2),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "10:00 ~ 12:00",
-                        style: TextStyle(
+                        timeText,
+                        style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      Text(
+                      const Text(
                         "요약 보기 >",
                         style: TextStyle(
                           color: Colors.white,

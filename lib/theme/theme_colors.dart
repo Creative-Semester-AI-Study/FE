@@ -3,6 +3,7 @@ import 'dart:ui';
 const colorBottomBarSelected = Color(0xFF79AEFF);
 const colorFinishedCircle = Color.fromARGB(179, 121, 175, 255);
 const colorLine = Color(0x30062D5F);
+const colorCardDisabled = Color(0xFFC9DBFF);
 const colorBottomBarDefault = Color(0xFF062D5F);
 const colorDefaultBackground = Color(0xFFF3F3F3);
 const colorDefault = Color(0xFF1b1b1b);

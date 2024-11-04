@@ -2,7 +2,9 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:study_helper/buttons/button_complete.dart';
+import 'package:study_helper/cards/completed_card.dart';
+import 'package:study_helper/cards/disabled_card.dart';
+import 'package:study_helper/cards/ongoing_card.dart';
 import 'package:study_helper/theme/theme_colors.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -108,12 +110,29 @@ class _StudyScreenState extends State<StudyScreen> {
                 child: SingleChildScrollView(
                   child: Padding(
                     padding:
-                        const EdgeInsets.only(top: 40, left: 30, right: 30),
+                        const EdgeInsets.only(top: 30, left: 25, right: 25),
                     child: Column(
                       children: [
-                        buttonCompleted(),
-                        buttonCompleted(),
-                        buttonCompleted(),
+                        CompletedCard(
+                          subjectName: "알고리즘",
+                          timeText: "10:00 ~ 12:00",
+                          isLast: false,
+                        ),
+                        OnGoingCard(
+                          subjectName: "운영체제",
+                          timeText: "12:00 ~ 14:00",
+                          isLast: false,
+                        ),
+                        DisabledCard(
+                          subjectName: "데이터베이스",
+                          timeText: "14:30 ~ 16:30",
+                          isLast: false,
+                        ),
+                        DisabledCard(
+                          subjectName: "컴퓨터네트워크",
+                          timeText: "17:00 ~ 19:00",
+                          isLast: true,
+                        ),
                       ],
                     ),
                   ),
