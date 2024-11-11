@@ -2,9 +2,9 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:study_helper/cards/completed_card.dart';
-import 'package:study_helper/cards/disabled_card.dart';
-import 'package:study_helper/cards/ongoing_card.dart';
+import 'package:study_helper/cards/study_cards/completed_card.dart';
+import 'package:study_helper/cards/study_cards/disabled_card.dart';
+import 'package:study_helper/cards/study_cards/ongoing_card.dart';
 import 'package:study_helper/theme/theme_colors.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -15,11 +15,10 @@ class StudyScreen extends StatefulWidget {
   State<StudyScreen> createState() => _StudyScreenState();
 }
 
-bool isStudy = true;
-DateTime _focusedDay = DateTime.now();
-
 class _StudyScreenState extends State<StudyScreen> {
-  DateTime? _selectedDay;
+  DateTime _selectedDay = DateTime.now();
+  DateTime _focusedDay = DateTime.now();
+  bool isStudy = true;
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +70,7 @@ class _StudyScreenState extends State<StudyScreen> {
                 ),
               ],
             ),
-            const Gap(10),
+            const Gap(20),
             TableCalendar(
               focusedDay: _focusedDay,
               headerVisible: false,
@@ -93,7 +92,26 @@ class _StudyScreenState extends State<StudyScreen> {
               firstDay: DateTime(2024, 1, 1),
               lastDay: DateTime(2030, 12, 30),
               // headerStyle: HeaderStyle(),
-              calendarStyle: const CalendarStyle(isTodayHighlighted: false),
+              calendarStyle: const CalendarStyle(
+                isTodayHighlighted: false,
+                // markerDecoration: BoxDecoration(color: colorFinishedCircle),
+                // weekendTextStyle: TextStyle(
+                //   fontWeight: FontWeight.w500,
+                //   fontSize: 32,
+                // ),
+                // defaultTextStyle: TextStyle(
+                //   fontWeight: FontWeight.w500,
+                //   fontSize: 32,
+                // ),
+                selectedDecoration: BoxDecoration(
+                  color: colorBottomBarDefault,
+                  shape: BoxShape.circle,
+                ),
+                selectedTextStyle: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
             ),
             const Gap(20),
             Expanded(
@@ -119,6 +137,7 @@ class _StudyScreenState extends State<StudyScreen> {
                           isLast: false,
                         ),
                         ongoingCard(
+                          context: context,
                           subjectName: "운영체제",
                           timeText: "12:00 ~ 14:00",
                           isLast: false,
