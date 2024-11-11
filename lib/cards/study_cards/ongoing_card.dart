@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:study_helper/screens/summary_screens/summary_screen.dart';
+import 'package:study_helper/screens/summary_screens/lesson_screen.dart';
 import 'package:study_helper/theme/theme_colors.dart';
 
 Widget ongoingCard({
@@ -50,7 +50,7 @@ Widget ongoingCard({
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => SummaryScreen(
+                      builder: (context) => LessonScreen(
                             title: subjectName,
                           )));
             },
