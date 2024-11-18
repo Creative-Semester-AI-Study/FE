@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:study_helper/screens/summary_screens/lesson_screen.dart';
+import 'package:study_helper/screens/summary_screens/lesson_screen_legacy.dart';
 import 'package:study_helper/theme/theme_colors.dart';
 
 Widget ongoingCard({

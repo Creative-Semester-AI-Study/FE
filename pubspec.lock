@@ -349,6 +349,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
+  scrollable_text_indicator:
+    dependency: "direct main"
+    description:
+      name: scrollable_text_indicator
+      sha256: "2d907734824e2661e24f829d3d448096f3905f68f65aeb97af0e468efce40a23"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.2"
   shared_preferences:
     dependency: transitive
     description:

@@ -30,6 +30,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: Colors.white,
+                  focusColor: colorBottomBarDefault,
                 ),
                 expands: true,
                 maxLines: null,

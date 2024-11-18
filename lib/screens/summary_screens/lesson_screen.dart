@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
+import 'package:scrollable_text_indicator/scrollable_text_indicator.dart';
+import 'package:study_helper/screens/summary_screens/quiz_screen.dart';
 import 'package:study_helper/screens/summary_screens/summary_screen.dart';
 import 'package:study_helper/theme/theme_colors.dart';
 
@@ -76,9 +78,9 @@ class _LessonScreenState extends State<LessonScreen> {
                           ],
                         ),
                         Text(
-                          "요약 미완료",
+                          "요약완료",
                           style: TextStyle(
-                            color: Colors.red,
+                            color: Colors.green,
                             fontSize: 16,
                             fontWeight: FontWeight.w900,
                           ),
@@ -89,109 +91,89 @@ class _LessonScreenState extends State<LessonScreen> {
                 ),
               ),
               const Gap(10),
-              Expanded(
-                child: Card(
-                  clipBehavior: Clip.hardEdge,
-                  color: Colors.white,
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const SummaryScreen(),
-                        ),
-                      );
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              const Text(
-                                "요약하기",
-                                style: TextStyle(
-                                  color: colorBottomBarDefault,
-                                  fontSize: 32,
-                                  fontWeight: FontWeight.w900,
-                                ),
-                              ),
-                              Transform.translate(
-                                offset: const Offset(40, 60),
-                                child: SvgPicture.asset(
-                                  'assets/images/buttons/pen-tool-plus.svg',
-                                  height: 200,
-                                  // clipBehavior: Clip.antiAlias,
-                                ),
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
+              const Expanded(
+                child: ScrollableTextIndicator(
+                  text: Text(
+                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pulvinar risus sit amet augue viverra ultrices. Aliquam erat volutpat. Proin sagittis ultricies blandit. Donec diam velit, vestibulum commodo leo eu, suscipit condimentum ante. Aenean laoreet sapien mauris. Praesent maximus sagittis felis auctor facilisis. In ullamcorper velit id leo semper, pellentesque luctus risus efficitur. Aenean et tristique diam, vitae volutpat mi. Morbi bibendum ut nibh a ornare. Nulla nec dolor pellentesque, gravida neque ut, condimentum augue. Phasellus mollis metus ac tincidunt venenatis. Aenean at ullamcorper massa. Vestibulum volutpat nunc ut ultrices facilisis. Cras dui lorem, vehicula eu hendrerit non, sollicitudin quis libero. Morbi dapibus libero tincidunt lobortis efficitur. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pulvinar risus sit amet augue viverra ultrices. Aliquam erat volutpat. Proin sagittis ultricies blandit. Donec diam velit, vestibulum commodo leo eu, suscipit condimentum ante. Aenean laoreet sapien mauris. Praesent maximus sagittis felis auctor facilisis. In ullamcorper velit id leo semper, pellentesque luctus risus efficitur. Aenean et tristique diam, vitae volutpat mi. Morbi bibendum ut nibh a ornare. Nulla nec dolor pellentesque, gravida neque ut, condimentum augue. Phasellus mollis metus ac tincidunt venenatis. Aenean at ullamcorper massa. Vestibulum volutpat nunc ut ultrices facilisis. Cras dui lorem, vehicula eu hendrerit non, sollicitudin quis libero. Morbi dapibus libero tincidunt lobortis efficitur.',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16.0,
                     ),
                   ),
                 ),
               ),
-              Expanded(
-                child: Card(
-                  clipBehavior: Clip.hardEdge,
-                  color: Colors.grey,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                const Text(
-                                  "학습하기",
-                                  style: TextStyle(
-                                    color: Colors.black45,
-                                    fontSize: 32,
-                                    fontWeight: FontWeight.w900,
-                                  ),
-                                ),
-                                Transform.translate(
-                                  offset: const Offset(50, 50),
-                                  child: SvgPicture.asset(
-                                    colorFilter: const ColorFilter.mode(
-                                        Colors.black45, BlendMode.srcIn),
-                                    'assets/images/buttons/book-open-01.svg',
-                                    height: 200,
-                                    // clipBehavior: Clip.antiAlias,
-                                  ),
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
-                        Container(
-                          width: double.infinity,
+              const Gap(10),
+              Column(
+                children: [
+                  Row(
+                    // mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Flexible(
+                        child: Card(
                           color: colorBottomBarDefault,
-                          child: const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text(
-                              textAlign: TextAlign.center,
-                              "요약을 먼저 완료해주세요",
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.white),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const SummaryScreen(),
+                                ),
+                              );
+                            },
+                            child: const Padding(
+                              padding: EdgeInsets.all(20.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "요약내용 수정",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                      const Gap(4),
+                      Flexible(
+                        child: Card(
+                          color: colorBottomBarDefault,
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const QuizScreen(),
+                                ),
+                              );
+                            },
+                            child: const Padding(
+                              padding: EdgeInsets.all(20.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "학습하기",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
+                ],
               ),
             ],
           )),
