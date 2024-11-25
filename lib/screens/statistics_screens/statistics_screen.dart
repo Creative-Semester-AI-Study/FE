@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:card_swiper/card_swiper.dart';
+import 'package:circle_chart/circle_chart.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -52,6 +54,24 @@ class BarChartSample1State extends State<BarChartSample1> {
                     color: colorDefault,
                   ),
                 ),
+                const Divider(),
+                const Gap(4),
+                const Text(
+                  "요일별 통계",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                    color: colorDefault,
+                  ),
+                ),
+                // const Text(
+                //   "요일별 통계",
+                //   style: TextStyle(
+                //     fontSize: 14,
+                //     fontWeight: FontWeight.w600,
+                //     color: colorDefault,
+                //   ),
+                // ),
                 const Gap(38),
                 Expanded(
                   child: Padding(
@@ -63,10 +83,95 @@ class BarChartSample1State extends State<BarChartSample1> {
                   ),
                 ),
                 const Gap(38),
-                const Flexible(
-                    child: Card(
-                  child: Placeholder(),
-                )),
+                const Divider(),
+                const Gap(4),
+                const Text(
+                  "최근 학습",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                    color: colorDefault,
+                  ),
+                ),
+                const Gap(20),
+                Flexible(
+                  child: Swiper(
+                    itemBuilder: (BuildContext context, int index) {
+                      return Card(
+                        color: Colors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              const Text(
+                                "운영체제 3회차",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: colorDefault,
+                                ),
+                              ),
+                              const Gap(4),
+                              const Text(
+                                "학습일 : 11/20/24",
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
+                                  color: colorDefault,
+                                ),
+                              ),
+                              // const Gap(10),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    child: CircleChart(
+                                      progressColor: colorBottomBarSelected,
+                                      showRate: true,
+                                      progressNumber: 4,
+                                      maxNumber: 10,
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          width: 60,
+                                          height: 60,
+                                          decoration: const BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Colors.red,
+                                          ),
+                                          child: const Icon(
+                                            Icons.do_disturb_outlined,
+                                            color: Colors.white,
+                                            size: 30,
+                                          ),
+                                        ),
+                                        const Gap(10),
+                                        const Text("오답 복습 미완료")
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                    // layout: SwiperLayout.STACK,
+                    itemCount: 3,
+                    viewportFraction: 0.9,
+                    loop: false,
+                    // pagination: const SwiperPagination(),
+                    // control: const SwiperControl(
+                    //   iconNext: IconData(0),
+                    //   iconPrevious: Icons.empty,
+                    // ),
+                  ),
+                ),
                 const SizedBox(
                   height: 12,
                 ),
@@ -140,7 +245,7 @@ class BarChartSample1State extends State<BarChartSample1> {
             String weekDay;
             switch (group.x) {
               case 0:
-                weekDay = '월요일';
+                weekDay = '월요일 학습률';
                 break;
               case 1:
                 weekDay = '화요일';
