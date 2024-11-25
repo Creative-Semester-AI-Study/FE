@@ -7,6 +7,7 @@ import 'package:study_helper/bottom_bar_icon.dart';
 import 'package:study_helper/screens/home_screen.dart';
 import 'package:study_helper/screens/info_screen.dart';
 import 'package:study_helper/screens/profile_screen.dart';
+import 'package:study_helper/screens/stastics_screens/statstics_screen.dart';
 import 'package:study_helper/screens/study_screen.dart';
 import 'package:study_helper/theme/theme_colors.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
@@ -74,7 +75,7 @@ class _BottomBarState extends State<BottomBar> {
           children: [
             const HomeScreen(),
             const StudyScreen(),
-            const InfoScreen(),
+            BarChartSample1(),
             ProfileScreen(),
           ],
         ),
