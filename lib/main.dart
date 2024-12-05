@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:study_helper/bottom_bar.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:study_helper/screens/login_screens/login_screen.dart';
+import 'package:study_helper/screen/login_screens/login_screen.dart';
 import 'package:study_helper/theme/theme_colors.dart';
 
 void main() {

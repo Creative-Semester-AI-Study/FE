@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:study_helper/screens/summary_screens/lesson_screen.dart';
+import 'package:study_helper/screen/summary_screens/lesson_screen.dart';
 import 'package:study_helper/theme/theme_colors.dart';
 
 Widget ongoingCard({

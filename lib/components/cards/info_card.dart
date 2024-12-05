@@ -2,7 +2,7 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
-import 'package:study_helper/screens/info_detail_screen.dart';
+import 'package:study_helper/screen/info_detail_screen.dart';
 import 'package:study_helper/theme/theme_colors.dart';
 
 Widget infoCard(String title, String detail) {

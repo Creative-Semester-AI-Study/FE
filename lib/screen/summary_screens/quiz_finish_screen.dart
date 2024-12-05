@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:study_helper/screens/summary_screens/quiz_screen.dart';
+import 'package:study_helper/screen/summary_screens/quiz_screen.dart';
 import 'package:study_helper/theme/theme_colors.dart';
 
 class QuizFinishScreen extends StatefulWidget {

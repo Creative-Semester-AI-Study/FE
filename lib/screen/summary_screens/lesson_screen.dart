@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:scrollable_text_indicator/scrollable_text_indicator.dart';
-import 'package:study_helper/screens/summary_screens/quiz_screen.dart';
-import 'package:study_helper/screens/summary_screens/summary_screen.dart';
+import 'package:study_helper/screen/summary_screens/quiz_screen.dart';
+import 'package:study_helper/screen/summary_screens/summary_screen.dart';
 import 'package:study_helper/theme/theme_colors.dart';
 
 class LessonScreen extends StatefulWidget {

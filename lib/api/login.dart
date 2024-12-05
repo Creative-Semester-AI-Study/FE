@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:study_helper/api/api_consts.dart';
 import 'package:study_helper/api/token_manager.dart';
@@ -17,15 +19,13 @@ Future<bool> loginStatus(String id, String pw) async {
         responseType: ResponseType.json,
       ),
     );
-    print(response.statusCode);
-    if (response.statusCode == 401) {
-      return false;
-    } else if (response.statusCode == 200) {
-      print(response.data.toString());
-      // TokenManager().setToken(response.data[])
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = jsonDecode(response.data);
+      await TokenManager().setToken(data['token']);
       return true;
     }
   } catch (e) {
+    print("--ERROR OCCURED--");
     print(e);
   }
 
