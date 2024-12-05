@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:study_helper/cards/info_card.dart';
+import 'package:study_helper/components/cards/info_card.dart';
 import 'package:study_helper/theme/theme_colors.dart';
 
 class InfoScreen extends StatefulWidget {

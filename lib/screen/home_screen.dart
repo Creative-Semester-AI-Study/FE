@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:study_helper/buttons/category_button.dart';
-import 'package:study_helper/buttons/detail_category_button.dart';
-import 'package:study_helper/cards/contact_card.dart';
+import 'package:study_helper/components/buttons/category_button.dart';
+import 'package:study_helper/components/buttons/detail_category_button.dart';
+import 'package:study_helper/components/cards/contact_card.dart';
 import 'package:study_helper/theme/theme_colors.dart';
 
 class HomeScreen extends StatefulWidget {

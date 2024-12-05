@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:study_helper/api/login.dart';
 import 'package:study_helper/bottom_bar.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -22,7 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
       String password = _passwordController.text.trim();
 
       // TODO: Replace with your actual login logic
-      if (username == '123' && password == '123') {
+      if (await loginStatus(username, password)) {
         await secureStorage.write(key: 'isLoggedIn', value: 'true');
         Get.offAll(() => const BottomBar());
       } else {

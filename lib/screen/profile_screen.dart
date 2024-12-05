@@ -3,6 +3,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:study_helper/api/token_manager.dart';
 import 'package:study_helper/screens/login_screens/login_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -14,6 +15,7 @@ class ProfileScreen extends StatelessWidget {
 
   Future<void> _logout() async {
     await secureStorage.delete(key: 'isLoggedIn');
+    TokenManager().deleteToken();
     Get.offAll(() => const LoginScreen());
   }
 

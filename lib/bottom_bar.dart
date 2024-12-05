@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:study_helper/bottom_bar_icon.dart';
+import 'package:study_helper/util/bottom_bar_icon.dart';
 import 'package:study_helper/screens/home_screen.dart';
 import 'package:study_helper/screens/profile_screen.dart';
 import 'package:study_helper/screens/statistics_screens/statistics_screen.dart';
