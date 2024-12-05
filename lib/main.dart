@@ -10,8 +10,15 @@ import 'package:study_helper/theme/theme_colors.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
-  runApp(const GetMaterialApp(
-    home: MyApp(),
+  runApp(GetMaterialApp(
+    home: const MyApp(),
+    debugShowCheckedModeBanner: false,
+    title: '튜디',
+    theme: ThemeData(
+      scaffoldBackgroundColor: colorDefaultBackground,
+      fontFamily: "SUIT",
+      useMaterial3: true,
+    ),
   ));
 }
 
@@ -31,13 +38,6 @@ class MyApp extends StatelessWidget {
         Locale('ko', 'KR'),
         // include country code too
       ],
-      debugShowCheckedModeBanner: false,
-      title: '튜디',
-      theme: ThemeData(
-        scaffoldBackgroundColor: colorDefaultBackground,
-        fontFamily: "SUIT",
-        useMaterial3: true,
-      ),
       home: FutureBuilder(
         future: _checkLoginStatus(),
         builder: (context, snapshot) {
