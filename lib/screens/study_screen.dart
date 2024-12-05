@@ -1,10 +1,9 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:study_helper/cards/study_cards/completed_card.dart';
-import 'package:study_helper/cards/study_cards/disabled_card.dart';
-import 'package:study_helper/cards/study_cards/ongoing_card.dart';
+import 'package:study_helper/components/cards/study_cards/completed_card.dart';
+import 'package:study_helper/components/cards/study_cards/disabled_card.dart';
+import 'package:study_helper/components/cards/study_cards/ongoing_card.dart';
 import 'package:study_helper/theme/theme_colors.dart';
 import 'package:table_calendar/table_calendar.dart';
 
