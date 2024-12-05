@@ -50,6 +50,7 @@ dependencies:
   flutter_secure_storage: ^9.2.2
   get: ^4.6.6
   dio: ^5.7.0
+  rounded_loading_button_plus: ^3.0.1
 
 dev_dependencies:
   flutter_test:

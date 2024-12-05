@@ -19,6 +19,7 @@ Future<bool> loginStatus(String id, String pw) async {
         responseType: ResponseType.json,
       ),
     );
+    print(response.statusCode);
     if (response.statusCode == 200) {
       Map<String, dynamic> data = jsonDecode(response.data);
       await TokenManager().setToken(data['token']);
