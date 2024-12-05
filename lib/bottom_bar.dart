@@ -1,15 +1,10 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:gap/gap.dart';
 import 'package:study_helper/bottom_bar_icon.dart';
 import 'package:study_helper/screens/home_screen.dart';
-import 'package:study_helper/screens/info_screen.dart';
 import 'package:study_helper/screens/profile_screen.dart';
 import 'package:study_helper/screens/statistics_screens/statistics_screen.dart';
 import 'package:study_helper/screens/study_screen.dart';
-import 'package:study_helper/theme/theme_colors.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
 class BottomBar extends StatefulWidget {
