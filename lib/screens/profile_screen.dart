@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
+import 'package:study_helper/screens/login_screens/login_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({super.key});
   final List<SvgPicture> profiles = [
     SvgPicture.asset("assets/images/profiles/profile_green.svg"),
   ];
+  final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
+
+  Future<void> _logout() async {
+    await secureStorage.delete(key: 'isLoggedIn');
+    Get.offAll(() => const LoginScreen());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,6 +59,11 @@ class ProfileScreen extends StatelessWidget {
                 color: Colors.white,
                 child: const Text("정보수정"),
               ),
+            ),
+            const Gap(32),
+            IconButton(
+              icon: const Icon(Icons.logout),
+              onPressed: _logout,
             ),
           ],
         ),

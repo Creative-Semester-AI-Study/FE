@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 const colorBottomBarSelected = Color(0xFF79AEFF);
 const colorFinishedCircle = Color.fromARGB(179, 121, 175, 255);
-const colorLine = Color(0x30062D5F);
+const colorLine = Color.fromARGB(47, 22, 26, 30);
 const colorDetailScreenAppbar = Color(0xFFD9EBFF);
 const colorCardDisabled = Color.fromARGB(255, 171, 198, 251);
 const colorBottomBarDefault = Color(0xFF062D5F);

@@ -54,6 +54,7 @@ class BarChartSample1State extends State<BarChartSample1> {
                     color: colorDefault,
                   ),
                 ),
+                const Gap(12),
                 const Divider(),
                 const Gap(4),
                 const Text(
@@ -82,7 +83,7 @@ class BarChartSample1State extends State<BarChartSample1> {
                     ),
                   ),
                 ),
-                const Gap(38),
+                const Gap(20),
                 const Divider(),
                 const Gap(4),
                 const Text(
@@ -150,7 +151,11 @@ class BarChartSample1State extends State<BarChartSample1> {
                                           ),
                                         ),
                                         const Gap(10),
-                                        const Text("오답 복습 미완료")
+                                        const Text(
+                                          "오답 복습 미완료",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w600),
+                                        )
                                       ],
                                     ),
                                   ),
