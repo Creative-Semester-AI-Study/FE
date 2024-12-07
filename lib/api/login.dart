@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:study_helper/api/api_consts.dart';
 import 'package:study_helper/api/token_manager.dart';
+import 'package:study_helper/model/user/user_model.dart';
+import 'package:study_helper/model/user/user_preferences.dart';
 
 Future<bool> loginStatus(String id, String pw) async {
   Dio dio = Dio();
@@ -22,6 +24,8 @@ Future<bool> loginStatus(String id, String pw) async {
     print(response.statusCode);
     if (response.statusCode == 200) {
       Map<String, dynamic> data = jsonDecode(response.data);
+      UserModel user = UserModel.fromJson(data);
+      await UserPreferences.saveUser(user);
       await TokenManager().setToken(data['token']);
       return true;
     }
