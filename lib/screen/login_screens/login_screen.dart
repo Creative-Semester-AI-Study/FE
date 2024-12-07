@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
+
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
 import 'package:study_helper/api/login.dart';
 import 'package:study_helper/bottom_bar.dart';

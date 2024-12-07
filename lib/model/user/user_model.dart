@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class UserModel {
   late int grade;
   late int id;
