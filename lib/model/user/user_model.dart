@@ -26,6 +26,10 @@ class UserModel {
     };
   }
 
+  String getToken() {
+    return token;
+  }
+
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       grade: int.parse(json['grade'].toString()),

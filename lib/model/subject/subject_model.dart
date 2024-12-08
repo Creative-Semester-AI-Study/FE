@@ -28,12 +28,12 @@ class SubjectModel {
 
   factory SubjectModel.fromJson(Map<String, dynamic> json) {
     return SubjectModel(
-      profileId: int.parse(json['profileId'].toString()),
-      id: int.parse(json['id'].toString()),
-      subjectName: json['subjectsubjectName'],
-      professorName: json['professorName'],
-      startTime: json['startTime'],
-      endTime: json['endTime'],
+      profileId: json['profileId'] ?? 0,
+      id: json['id'] ?? 0,
+      subjectName: json['subjectName'] ?? '',
+      professorName: json['professorName'] ?? '',
+      startTime: json['startTime'] ?? '',
+      endTime: json['endTime'] ?? '',
     );
   }
 }

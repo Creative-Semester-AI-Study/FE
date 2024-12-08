@@ -29,6 +29,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: '튜디',
+      theme: ThemeData(
+        scaffoldBackgroundColor: colorDefaultBackground,
+        fontFamily: "SUIT",
+        useMaterial3: true,
+      ),
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
