@@ -4,6 +4,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:study_helper/api/api_consts.dart';
 import 'package:study_helper/api/token_manager.dart';
+import 'package:study_helper/model/subject/next_subject_preferences.dart';
 import 'package:study_helper/model/user/user_model.dart';
 import 'package:study_helper/model/user/user_preferences.dart';
 import 'package:study_helper/model/subject/subject_preferences.dart';
@@ -48,6 +49,7 @@ class AuthService {
       await _secureStorage.delete(key: 'isLoggedIn');
       await UserPreferences.removeUser();
       await SubjectPreferences.removeAllSubjects();
+      await NextSubjectPreferences.removeSubject();
       await _tokenManager.deleteToken();
     } catch (e) {
       print('Logout error: $e');

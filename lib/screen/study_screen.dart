@@ -69,7 +69,9 @@ class _StudyScreenState extends State<StudyScreen> {
                 ),
               ],
             ),
-            const Gap(20),
+            const Gap(12),
+            const Divider(),
+            const Gap(12),
             TableCalendar(
               focusedDay: _focusedDay,
               headerVisible: false,
