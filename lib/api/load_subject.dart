@@ -1,8 +1,13 @@
-import 'dart:convert';
 import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:get/get.dart';
 import 'package:study_helper/api/api_consts.dart';
+import 'package:study_helper/api/auth_service.dart';
+import 'package:study_helper/api/token_manager.dart';
 import 'package:study_helper/model/subject/subject_model.dart';
 import 'package:study_helper/model/subject/subject_preferences.dart';
+import 'package:study_helper/model/user/user_preferences.dart';
+import 'package:study_helper/screen/login_screens/login_screen.dart';
 
 Future<List<SubjectModel>> getSubjects(String token) async {
   // 먼저 로컬 저장소에서 과목 데이터를 가져옵니다.
@@ -46,6 +51,10 @@ Future<bool> loadSubject(String token) async {
 
       print("Loaded ${subjects.length} subjects");
       return true;
+    } else if (response.statusCode == 500) {
+      print("--ERROR OCCURRED--");
+      print("TOKEN NOT AVAILABLE, LOGOUT");
+      AuthService().logout();
     }
   } catch (e) {
     print("--ERROR OCCURRED--");

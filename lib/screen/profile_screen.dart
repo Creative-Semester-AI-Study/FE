@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
-import 'package:study_helper/api/token_manager.dart';
-import 'package:study_helper/model/subject/subject_preferences.dart';
+import 'package:study_helper/api/auth_service.dart';
 import 'package:study_helper/model/user/user_model.dart';
 import 'package:study_helper/model/user/user_preferences.dart';
-import 'package:study_helper/screen/login_screens/login_screen.dart';
 import 'package:study_helper/theme/theme_colors.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -19,7 +14,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
   final RoundedLoadingButtonController _roundedLoadingButtonController =
       RoundedLoadingButtonController();
 
@@ -28,14 +22,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
     _userFuture = _loadUser();
-  }
-
-  Future<void> _logout() async {
-    await secureStorage.delete(key: 'isLoggedIn');
-    await UserPreferences.removeUser();
-    await SubjectPreferences.removeAllSubjects();
-    TokenManager().deleteToken();
-    Get.offAll(() => const LoginScreen());
   }
 
   Future<UserModel> _loadUser() async {
@@ -165,7 +151,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             RoundedLoadingButton(
               controller: _roundedLoadingButtonController,
-              onPressed: _logout,
+              onPressed: AuthService().logout,
               color: colorBottomBarDefault,
               child: const Text(
                 '로그아웃',

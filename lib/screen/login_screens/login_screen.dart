@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
-import 'package:study_helper/api/auth.dart';
+import 'package:study_helper/api/auth_service.dart';
 import 'package:study_helper/bottom_bar.dart';
 import 'package:study_helper/theme/theme_colors.dart';
 
@@ -28,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
       String username = _usernameController.text.trim();
       String password = _passwordController.text.trim();
 
-      if (await auth(username, password)) {
+      if (await AuthService().login(username, password)) {
         await secureStorage.write(key: 'isLoggedIn', value: 'true');
         Get.offAll(() => const BottomBar());
       } else {

@@ -1,17 +1,13 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:circle_chart/circle_chart.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+import 'package:study_helper/api/auth_service.dart';
 import 'package:study_helper/api/load_subject.dart';
-import 'package:study_helper/api/token_manager.dart';
 import 'package:study_helper/model/subject/subject_model.dart';
-import 'package:study_helper/model/subject/subject_preferences.dart';
 import 'package:study_helper/model/user/user_model.dart';
 import 'package:study_helper/model/user/user_preferences.dart';
-import 'package:study_helper/screen/login_screens/login_screen.dart';
 import 'package:study_helper/theme/theme_colors.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -24,8 +20,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late Future<UserModel?> _userFuture;
   late Future<List<SubjectModel>> _subjectFuture;
+  final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
 
-  get secureStorage => null;
   @override
   void initState() {
     super.initState();
@@ -34,31 +30,20 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<List<SubjectModel>> _loadSubjects() async {
-    // _userFuture에서 UserModel을 가져옵니다.
-    UserModel? user = await _userFuture;
-
     // UserModel에서 토큰을 추출합니다.
-    String token = user!.getToken();
+    String? token = await AuthService().getToken();
 
     // 토큰을 사용하여 과목 데이터를 가져옵니다.
-    return await getSubjects(token);
+    return await getSubjects(token!);
   }
 
   Future<UserModel?> _loadUser() async {
     UserModel? user = await UserPreferences.getUser();
     if (user == null) {
-      await _logout();
+      await AuthService().logout();
       return null;
     }
     return user;
-  }
-
-  Future<void> _logout() async {
-    await secureStorage.delete(key: 'isLoggedIn');
-    await UserPreferences.removeUser();
-    await SubjectPreferences.removeAllSubjects();
-    TokenManager().deleteToken();
-    Get.offAll(() => const LoginScreen());
   }
 
   @override
