@@ -1,16 +1,3 @@
-# study_helper
+# study_helper_Tudie
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+강의 내용을 바탕으로 AI가 만들어주는 퀴즈 및 복습일정, TUDIE(튜디)의 FE 저장소입니다.
