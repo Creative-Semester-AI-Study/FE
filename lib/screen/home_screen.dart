@@ -3,11 +3,15 @@ import 'package:circle_chart/circle_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:study_helper/api/load_subject.dart';
+import 'package:study_helper/api/token_manager.dart';
 import 'package:study_helper/model/subject/subject_model.dart';
 import 'package:study_helper/model/subject/subject_preferences.dart';
 import 'package:study_helper/model/user/user_model.dart';
 import 'package:study_helper/model/user/user_preferences.dart';
+import 'package:study_helper/screen/login_screens/login_screen.dart';
 import 'package:study_helper/theme/theme_colors.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -18,8 +22,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late Future<UserModel> _userFuture;
+  late Future<UserModel?> _userFuture;
   late Future<List<SubjectModel>> _subjectFuture;
+
+  get secureStorage => null;
   @override
   void initState() {
     super.initState();
@@ -29,24 +35,30 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<List<SubjectModel>> _loadSubjects() async {
     // _userFuture에서 UserModel을 가져옵니다.
-    UserModel user = await _userFuture;
+    UserModel? user = await _userFuture;
 
     // UserModel에서 토큰을 추출합니다.
-    String token = user.getToken();
+    String token = user!.getToken();
 
     // 토큰을 사용하여 과목 데이터를 가져옵니다.
     return await getSubjects(token);
   }
 
-  Future<UserModel> _loadUser() async {
-    return await UserPreferences.getUser() ??
-        UserModel(
-            grade: 0,
-            name: 'null',
-            id: 0,
-            department: 'department',
-            status: 'status',
-            token: 'token');
+  Future<UserModel?> _loadUser() async {
+    UserModel? user = await UserPreferences.getUser();
+    if (user == null) {
+      await _logout();
+      return null;
+    }
+    return user;
+  }
+
+  Future<void> _logout() async {
+    await secureStorage.delete(key: 'isLoggedIn');
+    await UserPreferences.removeUser();
+    await SubjectPreferences.removeAllSubjects();
+    TokenManager().deleteToken();
+    Get.offAll(() => const LoginScreen());
   }
 
   @override
@@ -70,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
             const Gap(12),
             const Divider(),
             const Gap(12),
-            FutureBuilder<UserModel>(
+            FutureBuilder<UserModel?>(
               future: _userFuture,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -184,7 +196,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         );
                       },
                       // layout: SwiperLayout.STACK,
-                      itemCount: 3,
+                      itemCount: snapshot.data!.length,
                       viewportFraction: 0.9,
                       loop: false,
                       // pagination: const SwiperPagination(),
