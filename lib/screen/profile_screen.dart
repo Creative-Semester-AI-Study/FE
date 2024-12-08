@@ -82,7 +82,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                               ),
                               const Gap(6),
-                              Text(user.name),
+                              Text('이름: ${user.name}'),
                               // 여기에 더 많은 위젯을 추가할 수 있습니다.
                               Text('학년: ${user.grade}학년'),
                               Text('학과: ${user.department}'),
