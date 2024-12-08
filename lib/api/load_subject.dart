@@ -2,20 +2,16 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:study_helper/api/api_consts.dart';
-import 'package:study_helper/api/token_manager.dart';
-import 'package:study_helper/model/user/user_model.dart';
-import 'package:study_helper/model/user/user_preferences.dart';
 
-Future<bool> loginStatus(String id, String pw) async {
+Future<bool> loadSubject(String token) async {
   Dio dio = Dio();
   try {
-    final response = await dio.post(
-      "$url/study/login",
-      data: {
-        'id': id,
-        'pw': pw,
-      },
+    final response = await dio.get(
+      "$url/study/myPage/all",
       options: Options(
+        headers: {
+          'Authorization': token,
+        },
         validateStatus: (_) => true,
         contentType: Headers.jsonContentType,
         responseType: ResponseType.json,
@@ -24,9 +20,7 @@ Future<bool> loginStatus(String id, String pw) async {
     print(response.statusCode);
     if (response.statusCode == 200) {
       Map<String, dynamic> data = jsonDecode(response.data);
-      UserModel user = UserModel.fromJson(data);
-      await UserPreferences.saveUser(user);
-      await TokenManager().setToken(data['token']);
+      print(data.toString());
       return true;
     }
   } catch (e) {

@@ -107,7 +107,6 @@ flutter:
   assets:
     - assets/fonts/suit/
     - assets/images/
-    - assets/images/profiles/
     - assets/images/buttons/
     - assets/images/bottom_bar/icons/
     - assets/images/bottom_bar/letter_icon/
