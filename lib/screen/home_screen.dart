@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:study_helper/api/auth_service.dart';
 import 'package:study_helper/api/load_next_subject.dart';
@@ -7,6 +8,7 @@ import 'package:study_helper/api/load_subjects.dart';
 import 'package:study_helper/model/subject/subject_model.dart';
 import 'package:study_helper/model/user/user_model.dart';
 import 'package:study_helper/model/user/user_preferences.dart';
+import 'package:study_helper/screen/subject_screens/subject_add_screen.dart';
 import 'package:study_helper/screen/subject_screens/subject_detail_screen.dart';
 import 'package:study_helper/theme/theme_colors.dart';
 
@@ -200,7 +202,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: colorDefault,
                   ),
                 ),
-                IconButton(onPressed: () {}, icon: const Icon(Icons.add)),
+                IconButton(
+                    onPressed: () {
+                      Get.to(() => const SubjectAddScreen());
+                    },
+                    icon: const Icon(Icons.add)),
               ],
             ),
             const Gap(12),

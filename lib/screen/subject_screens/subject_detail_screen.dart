@@ -1,14 +1,12 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:study_helper/api/api_consts.dart';
-import 'package:study_helper/api/auth_service.dart';
-import 'package:study_helper/api/load_reviews.dart';
+import 'package:study_helper/api/service/subject_service.dart';
+import 'package:study_helper/api/service/auth_service.dart';
+import 'package:study_helper/api/load/load_reviews.dart';
 import 'package:study_helper/bottom_bar.dart';
 import 'package:study_helper/model/review/review_model.dart';
 import 'package:study_helper/model/subject/subject_model.dart';
-import 'package:study_helper/model/subject/subject_preferences.dart';
 import 'package:study_helper/theme/theme_colors.dart';
 
 class SubjectDetailScreen extends StatefulWidget {
@@ -22,6 +20,8 @@ class SubjectDetailScreen extends StatefulWidget {
 class _SubjectDetailScreenState extends State<SubjectDetailScreen> {
   late final Future<List<ReviewModel>> _futureReviewList;
   late String? token;
+  final SubjectService _subjectService = SubjectService();
+
   @override
   void initState() {
     super.initState();
@@ -33,41 +33,18 @@ class _SubjectDetailScreenState extends State<SubjectDetailScreen> {
     return await loadReviews(token!, widget.subjectModel.id);
   }
 
-  Future<void> _deleteSubject(
-      BuildContext context, String token, int id) async {
-    try {
-      final dio = Dio();
-      final response = await dio.delete(
-        '$url/study/subject/$id',
-        options: Options(
-          headers: {'Authorization': token},
-        ),
-      );
-      if (response.statusCode == 200) {
-        await SubjectPreferences.removeSubject(id);
-
-        if (!mounted) return; // 위젯이 여전히 마운트된 상태인지 확인
-
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('과목이 성공적으로 삭제되었습니다.')),
-        );
-
-        Get.offAll(() => const BottomBar(index: 0));
-      } else {
-        throw Exception('Failed to delete subject');
-      }
-    } catch (e) {
-      print('Error deleting subject: $e');
-      if (mounted) {
-        // 위젯이 여전히 마운트된 상태인지 확인
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('과목 삭제 중 오류가 발생했습니다.')),
-        );
-      }
+  Future<void> _deleteSubject() async {
+    bool success =
+        await _subjectService.deleteSubject(token!, widget.subjectModel.id);
+    if (success) {
+      Get.snackbar('성공', '과목이 성공적으로 삭제되었습니다.');
+      Get.offAll(() => const BottomBar(index: 0));
+    } else {
+      Get.snackbar('오류', '과목 삭제 중 오류가 발생했습니다.');
     }
   }
 
-  Future<void> showDeleteConfirmationDialog(BuildContext context) async {
+  Future<void> showDeleteConfirmationDialog() async {
     return Get.dialog(
       AlertDialog(
         backgroundColor: Colors.white,
@@ -77,26 +54,15 @@ class _SubjectDetailScreenState extends State<SubjectDetailScreen> {
         ),
         actions: <Widget>[
           TextButton(
-            child: const Text(
-              '취소',
-              style: TextStyle(
-                color: colorBottomBarDefault,
-              ),
-            ),
-            onPressed: () {
-              Get.back();
-            },
+            child: const Text('취소',
+                style: TextStyle(color: colorBottomBarDefault)),
+            onPressed: () => Get.back(),
           ),
           TextButton(
-            child: const Text(
-              '삭제',
-              style: TextStyle(
-                color: Colors.red,
-              ),
-            ),
-            onPressed: () async {
+            child: const Text('삭제', style: TextStyle(color: Colors.red)),
+            onPressed: () {
               Get.back();
-              await _deleteSubject(context, token!, widget.subjectModel.id);
+              _deleteSubject();
             },
           ),
         ],
@@ -128,7 +94,7 @@ class _SubjectDetailScreenState extends State<SubjectDetailScreen> {
             child: IconButton(
               icon: const Icon(Icons.delete),
               onPressed: () {
-                showDeleteConfirmationDialog(context);
+                showDeleteConfirmationDialog();
               },
             ),
           ),
