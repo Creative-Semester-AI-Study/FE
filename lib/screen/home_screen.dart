@@ -218,6 +218,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     return const Center(child: CircularProgressIndicator());
                   } else if (snapshot.hasData) {
                     return ListView.builder(
+                      physics: const ScrollPhysics(),
                       itemCount: snapshot.data!.length,
                       itemBuilder: (context, index) {
                         return InkWell(

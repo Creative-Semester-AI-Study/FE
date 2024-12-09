@@ -207,7 +207,7 @@ class _SubjectAddScreenState extends State<SubjectAddScreen> {
       }
     } else if (selectedDays.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('수업 요일을 선택해주세요')),
+        const SnackBar(content: Text('모든 입력 부분을 입력해주세요.')),
       );
       _roundedLoadingButton.reset();
     }
