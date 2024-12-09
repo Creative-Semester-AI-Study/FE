@@ -15,6 +15,28 @@ void main() {
     debugShowCheckedModeBanner: false,
     title: '튜디',
     theme: ThemeData(
+      primaryColor: colorBottomBarDefault,
+      colorScheme: ColorScheme.fromSwatch().copyWith(
+        secondary: colorBottomBarDefault,
+      ),
+      inputDecorationTheme: const InputDecorationTheme(
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.blueGrey), // 원하는 색상으로 변경
+        ),
+        labelStyle: TextStyle(color: Colors.black),
+        border: UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.black),
+        ),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: colorBottomBarDefault),
+        ),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          foregroundColor: Colors.white,
+          backgroundColor: colorBottomBarDefault,
+        ),
+      ),
       scaffoldBackgroundColor: colorDefaultBackground,
       fontFamily: "SUIT",
       useMaterial3: true,

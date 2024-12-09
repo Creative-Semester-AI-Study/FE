@@ -25,6 +25,7 @@ class _SubjectDetailScreenState extends State<SubjectDetailScreen> {
   @override
   void initState() {
     super.initState();
+    print(widget.subjectModel.toJson().toString());
     _futureReviewList = _loadReviews();
   }
 
