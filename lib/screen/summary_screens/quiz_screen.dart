@@ -16,7 +16,7 @@ class _QuizScreenState extends State<QuizScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: colorDetailScreenAppbar,
+        backgroundColor: Colors.white,
         title: const Text(
           "11월 18일 퀴즈",
           style: TextStyle(fontSize: 18),

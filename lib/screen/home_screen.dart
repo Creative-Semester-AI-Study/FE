@@ -1,7 +1,4 @@
-import 'package:card_swiper/card_swiper.dart';
-import 'package:circle_chart/circle_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:gap/gap.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:study_helper/api/auth_service.dart';
@@ -10,6 +7,7 @@ import 'package:study_helper/api/load_subjects.dart';
 import 'package:study_helper/model/subject/subject_model.dart';
 import 'package:study_helper/model/user/user_model.dart';
 import 'package:study_helper/model/user/user_preferences.dart';
+import 'package:study_helper/screen/subject_screens/subject_detail.dart';
 import 'package:study_helper/theme/theme_colors.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -159,7 +157,6 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
             const Gap(12),
-            const Divider(),
             Card(
               color: Colors.white,
               child: Padding(
@@ -167,7 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   children: [
                     const Text(
-                      "오늘 복습 진행도",
+                      "오늘 복습 진행도 : ",
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
@@ -216,37 +213,47 @@ class _HomeScreenState extends State<HomeScreen> {
                     return ListView.builder(
                       itemCount: snapshot.data!.length,
                       itemBuilder: (context, index) {
-                        return Card(
-                          color: colorBottomBarSelected,
-                          // elevation: 4.0,
-                          margin: const EdgeInsets.symmetric(
-                              vertical: 8.0, horizontal: 8.0),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 16.0, horizontal: 16),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  snapshot.data![index].subjectName,
-                                  style: const TextStyle(
+                        return InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SubjectDetail(
+                                      subjectModel: snapshot.data![index])),
+                            );
+                          },
+                          child: Card(
+                            color: colorBottomBarSelected,
+                            // elevation: 4.0,
+                            margin: const EdgeInsets.symmetric(
+                                vertical: 8.0, horizontal: 8.0),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 16.0, horizontal: 16),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    snapshot.data![index].subjectName,
+                                    style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w700),
+                                  ),
+                                  Text(
+                                    '${snapshot.data![index].professorName} 교수님',
+                                    style: const TextStyle(
                                       color: Colors.white,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w700),
-                                ),
-                                Text(
-                                  '${snapshot.data![index].professorName} 교수님',
-                                  style: const TextStyle(
-                                    color: Colors.white,
+                                    ),
                                   ),
-                                ),
-                                Text(
-                                  '${snapshot.data![index].days} ${snapshot.data![index].startTimeCoverted()} ~ ${snapshot.data![index].endTimeCoverted()}',
-                                  style: const TextStyle(
-                                    color: Colors.white,
+                                  Text(
+                                    '${snapshot.data![index].days} ${snapshot.data![index].startTimeCoverted()} ~ ${snapshot.data![index].endTimeCoverted()}',
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         );

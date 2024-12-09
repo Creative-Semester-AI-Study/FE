@@ -35,6 +35,11 @@ class AuthService {
         await UserPreferences.saveUser(user);
         await _tokenManager.setToken(data['token']);
         await _secureStorage.write(key: 'isLoggedIn', value: 'true');
+        Get.snackbar(
+          "로그인 성공.",
+          "${user.name}님 반갑습니다.",
+          snackPosition: SnackPosition.TOP,
+        );
         return true;
       }
     } catch (e) {
@@ -51,6 +56,11 @@ class AuthService {
       await SubjectPreferences.removeAllSubjects();
       await NextSubjectPreferences.removeSubject();
       await _tokenManager.deleteToken();
+      Get.snackbar(
+        "로그아웃 성공.",
+        "로그아웃하였습니다. 다시 이용하시려면 로그인해주세요.",
+        snackPosition: SnackPosition.BOTTOM,
+      );
     } catch (e) {
       print('Logout error: $e');
       // 에러 처리 로직

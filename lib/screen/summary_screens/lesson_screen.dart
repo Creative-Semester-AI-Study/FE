@@ -21,7 +21,7 @@ class _LessonScreenState extends State<LessonScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: colorDetailScreenAppbar,
+        backgroundColor: Colors.white,
         title: const Text(
           "수업 요약",
           style: TextStyle(fontSize: 18),

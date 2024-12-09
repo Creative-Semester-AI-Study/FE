@@ -56,6 +56,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
             const Gap(12),
             const Divider(),
             const Gap(12),
+            const Text(
+              "사용자 정보",
+              style: TextStyle(
+                fontWeight: FontWeight.w700,
+                fontSize: 20,
+              ),
+            ),
+            const Gap(12),
             FutureBuilder<UserModel>(
               future: _userFuture,
               builder: (context, snapshot) {
@@ -68,26 +76,43 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   return Card(
                     color: Colors.white,
                     child: Padding(
-                      padding: const EdgeInsets.all(12.0),
+                      padding: const EdgeInsets.all(16.0),
                       child: Row(
                         children: [
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
-                                "사용자 정보",
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w600,
+                              Text(
+                                '이름: ${user.name}',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16,
                                 ),
                               ),
-                              const Gap(6),
-                              Text('이름: ${user.name}'),
-                              // 여기에 더 많은 위젯을 추가할 수 있습니다.
-                              Text('학년: ${user.grade}학년'),
-                              Text('학과: ${user.department}'),
-                              Text('상태: ${user.status}생'),
-                              // 필요한 만큼 위젯을 추가하세요
+                              const Gap(3),
+                              Text(
+                                '학년: ${user.grade}학년',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              const Gap(3),
+                              Text(
+                                '학과: ${user.department}',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              const Gap(3),
+                              Text(
+                                '상태: ${user.status}생',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16,
+                                ),
+                              ),
                             ],
                           ),
                         ],

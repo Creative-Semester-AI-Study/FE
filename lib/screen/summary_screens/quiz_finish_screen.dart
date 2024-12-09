@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
+import 'package:study_helper/bottom_bar.dart';
 import 'package:study_helper/screen/summary_screens/quiz_screen.dart';
 import 'package:study_helper/theme/theme_colors.dart';
 
@@ -15,7 +17,7 @@ class _QuizFinishScreenState extends State<QuizFinishScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: colorDetailScreenAppbar,
+        backgroundColor: Colors.white,
         title: const Text(
           "퀴즈 완료",
           style: TextStyle(fontSize: 18),
@@ -100,7 +102,7 @@ class _QuizFinishScreenState extends State<QuizFinishScreen> {
                 color: colorBottomBarDefault,
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.pop(context);
+                    Get.offAll(() => const BottomBar(index: 1));
                   },
                   child: const Padding(
                     padding: EdgeInsets.all(20.0),
