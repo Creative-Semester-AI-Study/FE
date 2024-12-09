@@ -12,6 +12,8 @@ import 'package:study_helper/model/user/user_model.dart';
 import 'package:study_helper/model/user/user_preferences.dart';
 import 'package:study_helper/screen/subject_screens/subject_add_screen.dart';
 import 'package:study_helper/screen/subject_screens/subject_detail_screen.dart';
+import 'package:study_helper/screen/summary_screens/lesson_screen.dart';
+import 'package:study_helper/screen/summary_screens/summary_screen.dart';
 import 'package:study_helper/theme/theme_colors.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -113,55 +115,63 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       const Gap(12),
-                      Card(
-                        color: colorBottomBarDefault,
-                        child: Padding(
-                          padding: const EdgeInsets.all(24.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        nextSubject.subjectName,
-                                        style: const TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 16,
+                      InkWell(
+                        onTap: () async {
+                          print(await AuthService().getToken());
+                          print(nextSubject.toJson().toString());
+                          Get.to(() => const LessonScreen(title: '데이터베이스'));
+                        },
+                        child: Card(
+                          color: colorBottomBarDefault,
+                          child: Padding(
+                            padding: const EdgeInsets.all(24.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          nextSubject.subjectName,
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 16,
+                                          ),
                                         ),
-                                      ),
-                                      Text(
-                                        '${nextSubject.startTimeCoverted()} ~ ${nextSubject.endTimeCoverted()}',
-                                        style: const TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 16,
+                                        Text(
+                                          '${nextSubject.startTimeCoverted()} ~ ${nextSubject.endTimeCoverted()}',
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 16,
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              const Gap(20),
-                              const Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    '지금 수강하러가기 >',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 16,
+                                      ],
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ],
+                                  ],
+                                ),
+                                const Gap(20),
+                                const Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      '지금 수강하러가기 >',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
