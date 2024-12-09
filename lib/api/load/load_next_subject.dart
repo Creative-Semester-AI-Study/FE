@@ -1,10 +1,7 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:study_helper/api/api_consts.dart';
-import 'package:study_helper/api/auth_service.dart';
-import 'package:study_helper/main.dart';
+import 'package:study_helper/api/service/auth_service.dart';
 import 'package:study_helper/model/subject/next_subject_preferences.dart';
 import 'package:study_helper/model/subject/subject_model.dart';
 

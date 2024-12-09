@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:study_helper/api/api_consts.dart';
-import 'package:study_helper/api/token_manager.dart';
+import 'package:study_helper/api/service/token_manager.dart';
 import 'package:study_helper/model/subject/next_subject_preferences.dart';
 import 'package:study_helper/model/user/user_model.dart';
 import 'package:study_helper/model/user/user_preferences.dart';
