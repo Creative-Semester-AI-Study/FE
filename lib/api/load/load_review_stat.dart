@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:study_helper/api/api_consts.dart';
 import 'package:study_helper/api/service/auth_service.dart';
-import 'package:study_helper/model/review/review_model.dart';
 import 'package:study_helper/model/stat/stat_review_model.dart';
 
 Future<StatReviewModel> loadStatReview() async {
