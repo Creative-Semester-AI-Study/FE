@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:study_helper/api/api_consts.dart';
 import 'package:study_helper/api/auth_service.dart';

@@ -18,6 +18,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  // ignore: unused_field
   late Future<UserModel?> _userFuture;
   late Future<SubjectModel?> _nextSubjectFuture;
   late Future<List<SubjectModel>> _subjectFuture;
