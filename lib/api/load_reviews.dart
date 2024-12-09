@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:study_helper/api/api_consts.dart';
 import 'package:study_helper/api/auth_service.dart';
 import 'package:study_helper/model/review/review_model.dart';
@@ -32,6 +34,11 @@ Future<List<ReviewModel>> loadReviews(String token, int id) async {
     } else if (response.statusCode == 500) {
       print("--ERROR OCCURRED--");
       print("TOKEN NOT AVAILABLE, LOGOUT");
+      Get.snackbar(
+        "과목 로드 중 토큰 오류가 발생했습니다",
+        "다시 로그인해주세요.",
+        snackPosition: SnackPosition.BOTTOM,
+      );
       AuthService().logout();
     }
   } catch (e) {
