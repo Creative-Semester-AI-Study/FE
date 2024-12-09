@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class ReviewModel {
   final int id;
   final int subjectId;
@@ -18,6 +20,11 @@ class ReviewModel {
     required this.summaryId,
     required this.userId,
   });
+
+  String getFormattedDateTime() {
+    final formatter = DateFormat('yyyy-MM-dd HH:mm');
+    return formatter.format(createdAt);
+  }
 
   factory ReviewModel.fromJson(Map<String, dynamic> json) {
     return ReviewModel(

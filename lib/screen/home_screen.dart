@@ -157,7 +157,6 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
             const Gap(12),
-            const Divider(),
             Card(
               color: Colors.white,
               child: Padding(
@@ -165,7 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   children: [
                     const Text(
-                      "오늘 복습 진행도",
+                      "오늘 복습 진행도 : ",
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
