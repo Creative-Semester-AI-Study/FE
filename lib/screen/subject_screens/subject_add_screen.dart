@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
-import 'package:study_helper/api/service/auth_service.dart';
 import 'package:study_helper/api/service/subject_service.dart';
 import 'package:study_helper/bottom_bar.dart';
 import 'package:study_helper/model/user/user_preferences.dart';
@@ -207,7 +206,7 @@ class _SubjectAddScreenState extends State<SubjectAddScreen> {
       }
     } else if (selectedDays.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('수업 요일을 선택해주세요')),
+        const SnackBar(content: Text('모든 입력 부분을 입력해주세요.')),
       );
       _roundedLoadingButton.reset();
     }

@@ -87,7 +87,10 @@ class _SubjectDetailScreenState extends State<SubjectDetailScreen> {
             padding: const EdgeInsets.only(right: 0.0),
             child: IconButton(
               icon: const Icon(Icons.edit),
-              onPressed: () {},
+              onPressed: () {
+                Get.snackbar('오류', '수정 기능은 추후 구현 예정입니다.',
+                    snackPosition: SnackPosition.BOTTOM);
+              },
             ),
           ),
           Padding(

@@ -17,7 +17,13 @@ void main() {
     theme: ThemeData(
       primaryColor: colorBottomBarDefault,
       colorScheme: ColorScheme.fromSwatch().copyWith(
-        secondary: colorBottomBarDefault,
+        primary: colorBottomBarDefault,
+        secondary: colorBottomBarSelected,
+      ),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          foregroundColor: colorBottomBarDefault,
+        ),
       ),
       inputDecorationTheme: const InputDecorationTheme(
         enabledBorder: UnderlineInputBorder(
