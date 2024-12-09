@@ -222,111 +222,130 @@ class _SubjectAddScreenState extends State<SubjectAddScreen> {
       body: Form(
         key: _formKey,
         child: Padding(
-          padding: const EdgeInsets.all(32.0),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextFormField(
-                  decoration: const InputDecoration(labelText: '과목명'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return '과목명을 입력해주세요';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) => subjectName = value!,
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(labelText: '교수명'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return '교수명을 입력해주세요';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) => professorName = value!,
-                ),
-                const SizedBox(height: 20),
-                const Text('수업 요일'),
-                Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Wrap(
-                        spacing: 8.0,
-                        children: weekdays.sublist(0, 4).map((day) {
-                          return FilterChip(
-                            label: Text(day),
-                            selectedColor: colorBottomBarDefault,
-                            selected: selectedDays.contains(day),
-                            onSelected: (bool selected) {
-                              setState(() {
-                                if (selected) {
-                                  selectedDays.add(day);
-                                } else {
-                                  selectedDays.remove(day);
-                                }
-                              });
-                            },
-                          );
-                        }).toList(),
-                      ),
-                      const SizedBox(height: 8),
-                      Wrap(
-                        spacing: 8.0,
-                        children: weekdays.sublist(4).map((day) {
-                          return FilterChip(
-                            selectedColor: colorBottomBarDefault,
-                            label: Text(day),
-                            selected: selectedDays.contains(day),
-                            onSelected: (bool selected) {
-                              setState(() {
-                                if (selected) {
-                                  selectedDays.add(day);
-                                } else {
-                                  selectedDays.remove(day);
-                                }
-                              });
-                            },
-                          );
-                        }).toList(),
-                      ),
-                    ],
+          padding: const EdgeInsets.all(16.0),
+          child: Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+              SingleChildScrollView(
+                child: Card(
+                  color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextFormField(
+                          decoration: const InputDecoration(labelText: '과목명'),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return '과목명을 입력해주세요';
+                            }
+                            return null;
+                          },
+                          onSaved: (value) => subjectName = value!,
+                        ),
+                        TextFormField(
+                          decoration: const InputDecoration(labelText: '교수명'),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return '교수명을 입력해주세요';
+                            }
+                            return null;
+                          },
+                          onSaved: (value) => professorName = value!,
+                        ),
+                        const SizedBox(height: 20),
+                        const Text('수업 요일'),
+                        Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Wrap(
+                                spacing: 8.0,
+                                children: weekdays.sublist(0, 4).map((day) {
+                                  return FilterChip(
+                                    label: Text(day),
+
+                                    backgroundColor:
+                                        Colors.grey[200], // 선택되지 않았을 때의 배경색
+                                    selectedColor: colorBottomBarDefault,
+                                    selected: selectedDays.contains(day),
+                                    onSelected: (bool selected) {
+                                      setState(() {
+                                        if (selected) {
+                                          selectedDays.add(day);
+                                        } else {
+                                          selectedDays.remove(day);
+                                        }
+                                      });
+                                    },
+                                  );
+                                }).toList(),
+                              ),
+                              const SizedBox(height: 8),
+                              Wrap(
+                                spacing: 8.0,
+                                children: weekdays.sublist(4).map((day) {
+                                  return FilterChip(
+                                    backgroundColor:
+                                        Colors.grey[200], // 선택되지 않았을 때의 배경색
+                                    selectedColor: colorBottomBarDefault,
+                                    label: Text(day),
+                                    selected: selectedDays.contains(day),
+                                    onSelected: (bool selected) {
+                                      setState(() {
+                                        if (selected) {
+                                          selectedDays.add(day);
+                                        } else {
+                                          selectedDays.remove(day);
+                                        }
+                                      });
+                                    },
+                                  );
+                                }).toList(),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        _buildTimeInput(
+                            '시작 시간',
+                            startHourController,
+                            startMinuteController,
+                            () => _selectTime(context, true), (value) {
+                          setState(() => startAmPm = value!);
+                        }, startAmPm),
+                        const SizedBox(height: 20),
+                        _buildTimeInput(
+                            '종료 시간',
+                            endHourController,
+                            endMinuteController,
+                            () => _selectTime(context, false), (value) {
+                          setState(() => endAmPm = value!);
+                        }, endAmPm),
+                        const SizedBox(height: 20),
+                        _buildDateInput(
+                            '시작일', startDate, () => _selectDate(context, true)),
+                        const SizedBox(height: 20),
+                        _buildDateInput(
+                            '종료일', endDate, () => _selectDate(context, false)),
+                        const Gap(100),
+                      ],
+                    ),
                   ),
                 ),
-                const SizedBox(height: 20),
-                _buildTimeInput(
-                    '시작 시간',
-                    startHourController,
-                    startMinuteController,
-                    () => _selectTime(context, true), (value) {
-                  setState(() => startAmPm = value!);
-                }, startAmPm),
-                const SizedBox(height: 20),
-                _buildTimeInput('종료 시간', endHourController, endMinuteController,
-                    () => _selectTime(context, false), (value) {
-                  setState(() => endAmPm = value!);
-                }, endAmPm),
-                const SizedBox(height: 20),
-                _buildDateInput(
-                    '시작일', startDate, () => _selectDate(context, true)),
-                const SizedBox(height: 20),
-                _buildDateInput(
-                    '종료일', endDate, () => _selectDate(context, false)),
-                const Gap(30),
-                RoundedLoadingButton(
-                  width: MediaQuery.of(context).size.width,
-                  controller: _roundedLoadingButton,
-                  color: colorBottomBarDefault,
-                  onPressed: () {
-                    _addSubject();
-                  },
-                  child: const Text('과목 추가'),
-                ),
-              ],
-            ),
+              ),
+              RoundedLoadingButton(
+                width: MediaQuery.of(context).size.width,
+                controller: _roundedLoadingButton,
+                color: colorBottomBarDefault,
+                onPressed: () {
+                  _addSubject();
+                },
+                child: const Text('과목 추가'),
+              ),
+            ],
           ),
         ),
       ),
@@ -353,6 +372,7 @@ class _SubjectAddScreenState extends State<SubjectAddScreen> {
               spacing: 8.0,
               children: amPmOptions.map((option) {
                 return FilterChip(
+                  backgroundColor: Colors.grey[200], // 선택되지 않았을 때의 배경색
                   label: Text(option),
                   selectedColor: colorBottomBarDefault,
                   selected: currentAmPm == option,
