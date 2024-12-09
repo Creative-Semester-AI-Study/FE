@@ -1,8 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:study_helper/api/api_consts.dart';
-import 'package:study_helper/api/auth_service.dart';
+import 'package:study_helper/api/service/auth_service.dart';
 import 'package:study_helper/model/review/review_model.dart';
 
 Future<List<ReviewModel>> loadReviews(String token, int id) async {

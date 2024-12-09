@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
-import 'package:study_helper/api/auth_service.dart';
+import 'package:study_helper/api/service/auth_service.dart';
 import 'package:study_helper/model/user/user_model.dart';
 import 'package:study_helper/model/user/user_preferences.dart';
 import 'package:study_helper/theme/theme_colors.dart';

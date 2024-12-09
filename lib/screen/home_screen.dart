@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-import 'package:study_helper/api/auth_service.dart';
-import 'package:study_helper/api/load_next_subject.dart';
-import 'package:study_helper/api/load_subjects.dart';
+import 'package:study_helper/api/service/auth_service.dart';
+import 'package:study_helper/api/load/load_next_subject.dart';
+import 'package:study_helper/api/load/load_subjects.dart';
 import 'package:study_helper/model/subject/subject_model.dart';
 import 'package:study_helper/model/user/user_model.dart';
 import 'package:study_helper/model/user/user_preferences.dart';
-import 'package:study_helper/screen/subject_screens/subject_detail.dart';
+import 'package:study_helper/screen/subject_screens/subject_add_screen.dart';
+import 'package:study_helper/screen/subject_screens/subject_detail_screen.dart';
 import 'package:study_helper/theme/theme_colors.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -18,6 +20,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  // ignore: unused_field
   late Future<UserModel?> _userFuture;
   late Future<SubjectModel?> _nextSubjectFuture;
   late Future<List<SubjectModel>> _subjectFuture;
@@ -199,7 +202,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: colorDefault,
                   ),
                 ),
-                IconButton(onPressed: () {}, icon: const Icon(Icons.add)),
+                IconButton(
+                    onPressed: () {
+                      Get.to(() => const SubjectAddScreen());
+                    },
+                    icon: const Icon(Icons.add)),
               ],
             ),
             const Gap(12),
@@ -218,7 +225,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => SubjectDetail(
+                                  builder: (context) => SubjectDetailScreen(
                                       subjectModel: snapshot.data![index])),
                             );
                           },

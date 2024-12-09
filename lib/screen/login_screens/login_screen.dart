@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
-import 'package:study_helper/api/auth_service.dart';
+import 'package:study_helper/api/service/auth_service.dart';
 import 'package:study_helper/bottom_bar.dart';
 import 'package:study_helper/theme/theme_colors.dart';
 

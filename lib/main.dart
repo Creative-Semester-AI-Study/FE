@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:study_helper/api/auth_service.dart';
+import 'package:study_helper/api/service/auth_service.dart';
 import 'package:study_helper/bottom_bar.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:study_helper/screen/login_screens/login_screen.dart';
@@ -16,6 +15,28 @@ void main() {
     debugShowCheckedModeBanner: false,
     title: '튜디',
     theme: ThemeData(
+      primaryColor: colorBottomBarDefault,
+      colorScheme: ColorScheme.fromSwatch().copyWith(
+        secondary: colorBottomBarDefault,
+      ),
+      inputDecorationTheme: const InputDecorationTheme(
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.blueGrey), // 원하는 색상으로 변경
+        ),
+        labelStyle: TextStyle(color: Colors.black),
+        border: UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.black),
+        ),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: colorBottomBarDefault),
+        ),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          foregroundColor: Colors.white,
+          backgroundColor: colorBottomBarDefault,
+        ),
+      ),
       scaffoldBackgroundColor: colorDefaultBackground,
       fontFamily: "SUIT",
       useMaterial3: true,

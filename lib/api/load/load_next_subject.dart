@@ -1,29 +1,28 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:study_helper/api/api_consts.dart';
-import 'package:study_helper/api/auth_service.dart';
+import 'package:study_helper/api/service/auth_service.dart';
+import 'package:study_helper/model/subject/next_subject_preferences.dart';
 import 'package:study_helper/model/subject/subject_model.dart';
-import 'package:study_helper/model/subject/subject_preferences.dart';
 
-Future<List<SubjectModel>> getSubjects(String token) async {
+Future<SubjectModel?> getNextSubject(String token) async {
   // 먼저 로컬 저장소에서 과목 데이터를 가져옵니다.
-  List<SubjectModel> subjects = await SubjectPreferences.getSubjects();
+  SubjectModel? subjects = await NextSubjectPreferences.getSubject();
 
-  // 로컬 저장소에 데이터가 없거나 유효하지 않으면 서버에 요청합니다.
-  if (subjects.isEmpty || !(await SubjectPreferences.isDataValid())) {
-    bool loadSuccess = await loadSubject(token);
+  if (!(await NextSubjectPreferences.isDataValid()) || subjects == null) {
+    bool loadSuccess = await loadNextSubject(token);
     if (loadSuccess) {
-      subjects = await SubjectPreferences.getSubjects();
+      subjects = await NextSubjectPreferences.getSubject();
     }
   }
   return subjects;
 }
 
-Future<bool> loadSubject(String token) async {
+Future<bool> loadNextSubject(String token) async {
   Dio dio = Dio();
   try {
     final response = await dio.get(
-      "$url/study/myPage/all",
+      "$url/study/subject/nextSubject",
       options: Options(
         headers: {
           'Authorization': token,
@@ -38,14 +37,11 @@ Future<bool> loadSubject(String token) async {
       print(response.data.runtimeType);
       print(response.data.toString());
 
-      List<dynamic> subjectsData = response.data is List ? response.data : [];
-      List<SubjectModel> subjects = subjectsData
-          .map((subjectData) => SubjectModel.fromJson(subjectData))
-          .toList();
-      // 받아온 과목 데이터를 SubjectPreferences를 사용하여 저장
-      await SubjectPreferences.saveSubjects(subjects);
+      SubjectModel subjectData = SubjectModel.fromJson(response.data);
 
-      print("Loaded ${subjects.length} subjects");
+      // 받아온 과목 데이터를 SubjectPreferences를 사용하여 저장
+      await NextSubjectPreferences.saveSubject(subjectData);
+
       return true;
     } else if (response.statusCode == 500) {
       print("--ERROR OCCURRED--");
