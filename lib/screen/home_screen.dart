@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:study_helper/api/load/load_review_stat.dart';
 import 'package:study_helper/api/service/auth_service.dart';
 import 'package:study_helper/api/load/load_next_subject.dart';
 import 'package:study_helper/api/load/load_subjects.dart';
+import 'package:study_helper/model/stat/stat_review_model.dart';
 import 'package:study_helper/model/subject/subject_model.dart';
 import 'package:study_helper/model/user/user_model.dart';
 import 'package:study_helper/model/user/user_preferences.dart';
@@ -24,13 +26,24 @@ class _HomeScreenState extends State<HomeScreen> {
   late Future<UserModel?> _userFuture;
   late Future<SubjectModel?> _nextSubjectFuture;
   late Future<List<SubjectModel>> _subjectFuture;
-
+  late Future<StatReviewModel> _statReviewFuture;
+  late double todayReviewPercent;
   @override
   void initState() {
     super.initState();
     _userFuture = _loadUser();
     _subjectFuture = _loadSubjects();
     _nextSubjectFuture = _loadNextSubject();
+    _statReviewFuture = _loadStatReview();
+  }
+
+  Future<StatReviewModel> _loadStatReview() async {
+    var loadStatReviewFuture = await loadStatReview();
+    todayReviewPercent = loadStatReviewFuture.totalReviews == 0
+        ? 0
+        : loadStatReviewFuture.completedReviews /
+            loadStatReviewFuture.totalReviews;
+    return loadStatReviewFuture;
   }
 
   Future<SubjectModel?> _loadNextSubject() async {
@@ -162,31 +175,65 @@ class _HomeScreenState extends State<HomeScreen> {
             const Gap(12),
             Card(
               color: Colors.white,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  children: [
-                    const Text(
-                      "오늘 복습 진행도 : ",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: colorDefault,
-                      ),
-                    ),
-                    const Gap(12),
-                    LinearPercentIndicator(
-                      barRadius: const Radius.circular(100),
-                      // width: MediaQuery.of(context).size.width - 50,
-                      animation: true,
-                      // lineHeight: 20.0,
-                      animationDuration: 500,
-                      percent: 0.9,
+              child: FutureBuilder(
+                future: _statReviewFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        children: [
+                          Text(
+                            "오늘 복습 진행도 : ${todayReviewPercent * 100}%",
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: colorDefault,
+                            ),
+                          ),
+                          const Gap(12),
+                          LinearPercentIndicator(
+                            barRadius: const Radius.circular(100),
+                            // width: MediaQuery.of(context).size.width - 50,
+                            animation: true,
+                            // lineHeight: 20.0,
+                            animationDuration: 500,
+                            percent: todayReviewPercent,
 
-                      progressColor: colorBottomBarDefault,
-                    ),
-                  ],
-                ),
+                            progressColor: colorBottomBarDefault,
+                          ),
+                        ],
+                      ),
+                    );
+                  } else {
+                    return Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        children: [
+                          const Text(
+                            "오늘 복습 진행도 : 0.0%",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: colorDefault,
+                            ),
+                          ),
+                          const Gap(12),
+                          LinearPercentIndicator(
+                            barRadius: const Radius.circular(100),
+                            // width: MediaQuery.of(context).size.width - 50,
+                            animation: true,
+                            // lineHeight: 20.0,
+                            animationDuration: 500,
+                            percent: 0,
+
+                            progressColor: colorBottomBarDefault,
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                },
               ),
             ),
             const Gap(12),
