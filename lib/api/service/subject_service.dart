@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:study_helper/api/api_consts.dart';
 import 'package:study_helper/api/load/load_next_subject.dart';
 import 'package:study_helper/api/service/auth_service.dart';
-import 'package:study_helper/model/subject/next_subject_preferences.dart';
 import 'package:study_helper/model/subject/subject_preferences.dart';
 
 import '../../model/subject/subject_model.dart';

@@ -15,6 +15,7 @@ void main() {
     debugShowCheckedModeBanner: false,
     title: '튜디',
     theme: ThemeData(
+      indicatorColor: colorBottomBarDefault,
       primaryColor: colorBottomBarDefault,
       colorScheme: ColorScheme.fromSwatch().copyWith(
         primary: colorBottomBarDefault,
@@ -43,6 +44,7 @@ void main() {
           backgroundColor: colorBottomBarDefault,
         ),
       ),
+      dividerColor: Colors.grey,
       scaffoldBackgroundColor: colorDefaultBackground,
       fontFamily: "SUIT",
       useMaterial3: true,
