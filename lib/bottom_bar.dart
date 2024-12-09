@@ -8,16 +8,23 @@ import 'package:study_helper/screen/study_screen.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
 class BottomBar extends StatefulWidget {
-  const BottomBar({super.key});
+  final int index;
+  const BottomBar({super.key, required this.index});
 
   @override
   State<BottomBar> createState() => _BottomBarState();
 }
 
 class _BottomBarState extends State<BottomBar> {
-  int selected = 0;
+  late int selected;
   bool heart = false;
-  final controller = PageController();
+  late final controller;
+  @override
+  void initState() {
+    selected = widget.index;
+    controller = PageController(initialPage: selected);
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -71,7 +78,7 @@ class _BottomBarState extends State<BottomBar> {
             const HomeScreen(),
             const StudyScreen(),
             BarChartSample1(),
-            ProfileScreen(),
+            const ProfileScreen(),
           ],
         ),
       ),

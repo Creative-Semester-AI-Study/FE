@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           } else {
             if (snapshot.hasData && snapshot.data == true) {
-              return const BottomBar();
+              return const BottomBar(index: 0);
             } else {
               return const LoginScreen();
             }

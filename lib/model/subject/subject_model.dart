@@ -62,12 +62,6 @@ class SubjectModel {
     return '$period $hour:$minute';
   }
 
-  @override
-  String toString() {
-    // TODO: implement toString
-    return super.toString();
-  }
-
   factory SubjectModel.fromJson(Map<String, dynamic> json) {
     return SubjectModel(
       profileId: json['profileId'] ?? json['subjectId'] ?? 0,

@@ -30,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
       if (await AuthService().login(username, password)) {
         await secureStorage.write(key: 'isLoggedIn', value: 'true');
-        Get.offAll(() => const BottomBar());
+        Get.offAll(() => const BottomBar(index: 0));
       } else {
         _showErrorDialog();
       }
