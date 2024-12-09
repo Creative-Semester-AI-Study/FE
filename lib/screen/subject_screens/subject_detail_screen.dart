@@ -11,15 +11,15 @@ import 'package:study_helper/model/subject/subject_model.dart';
 import 'package:study_helper/model/subject/subject_preferences.dart';
 import 'package:study_helper/theme/theme_colors.dart';
 
-class SubjectDetail extends StatefulWidget {
+class SubjectDetailScreen extends StatefulWidget {
   final SubjectModel subjectModel;
-  const SubjectDetail({super.key, required this.subjectModel});
+  const SubjectDetailScreen({super.key, required this.subjectModel});
 
   @override
-  State<SubjectDetail> createState() => _SubjectDetailState();
+  State<SubjectDetailScreen> createState() => _SubjectDetailScreenState();
 }
 
-class _SubjectDetailState extends State<SubjectDetail> {
+class _SubjectDetailScreenState extends State<SubjectDetailScreen> {
   late final Future<List<ReviewModel>> _futureReviewList;
   late String? token;
   @override

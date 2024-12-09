@@ -7,7 +7,7 @@ import 'package:study_helper/api/load_subjects.dart';
 import 'package:study_helper/model/subject/subject_model.dart';
 import 'package:study_helper/model/user/user_model.dart';
 import 'package:study_helper/model/user/user_preferences.dart';
-import 'package:study_helper/screen/subject_screens/subject_detail.dart';
+import 'package:study_helper/screen/subject_screens/subject_detail_screen.dart';
 import 'package:study_helper/theme/theme_colors.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -218,7 +218,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => SubjectDetail(
+                                  builder: (context) => SubjectDetailScreen(
                                       subjectModel: snapshot.data![index])),
                             );
                           },
