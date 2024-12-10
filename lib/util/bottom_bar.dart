@@ -18,7 +18,7 @@ class BottomBar extends StatefulWidget {
 class _BottomBarState extends State<BottomBar> {
   late int selected;
   bool heart = false;
-  late final controller;
+  late final PageController controller;
   @override
   void initState() {
     selected = widget.index;

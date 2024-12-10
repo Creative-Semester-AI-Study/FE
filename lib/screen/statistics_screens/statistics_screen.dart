@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:card_swiper/card_swiper.dart';
 import 'package:circle_chart/circle_chart.dart';
+import 'package:dio/dio.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -30,7 +31,7 @@ class BarChartSample1 extends StatefulWidget {
 
 class BarChartSample1State extends State<BarChartSample1> {
   final Duration animDuration = const Duration(milliseconds: 250);
-
+  bool test = false;
   int touchedIndex = -1;
 
   @override
@@ -53,11 +54,19 @@ class BarChartSample1State extends State<BarChartSample1> {
                     color: colorDefault,
                   ),
                 ),
+                TextButton(
+                  onPressed: () {
+                    setState(() {
+                      test = !test;
+                    });
+                  },
+                  child: const Text('asd'),
+                ),
                 const Gap(12),
                 const Divider(),
                 const Gap(4),
                 const Text(
-                  "요일별 통계",
+                  "월별 학습 통계",
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w600,
@@ -74,12 +83,8 @@ class BarChartSample1State extends State<BarChartSample1> {
                 // ),
                 const Gap(38),
                 Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: BarChart(
-                      mainBarData(),
-                      swapAnimationDuration: animDuration,
-                    ),
+                  child: _LineChart(
+                    isShowingMainData: test,
                   ),
                 ),
                 const Gap(20),
@@ -186,282 +191,202 @@ class BarChartSample1State extends State<BarChartSample1> {
       ),
     );
   }
+}
 
-  BarChartGroupData makeGroupData(
-    int x,
-    double y, {
-    bool isTouched = false,
-    Color? barColor,
-    double width = 22,
-    List<int> showTooltips = const [],
-  }) {
-    barColor ??= widget.barColor;
-    return BarChartGroupData(
-      x: x,
-      barRods: [
-        BarChartRodData(
-          toY: isTouched ? y + 1 : y,
-          color: isTouched ? widget.touchedBarColor : barColor,
-          width: width,
-          borderSide: isTouched
-              ? BorderSide(color: widget.touchedBarColor.darken(80))
-              : const BorderSide(color: Colors.white, width: 0),
-          backDrawRodData: BackgroundBarChartRodData(
-            show: true,
-            toY: 20,
-            color: widget.barBackgroundColor,
-          ),
-        ),
-      ],
-      showingTooltipIndicators: showTooltips,
+class _LineChart extends StatelessWidget {
+  const _LineChart({required this.isShowingMainData});
+
+  final bool isShowingMainData;
+
+  @override
+  Widget build(BuildContext context) {
+    return LineChart(
+      isShowingMainData ? sampleData1 : sampleData2,
+      duration: const Duration(milliseconds: 250),
     );
   }
 
-  List<BarChartGroupData> showingGroups() => List.generate(7, (i) {
-        switch (i) {
-          case 0:
-            return makeGroupData(0, 5, isTouched: i == touchedIndex);
-          case 1:
-            return makeGroupData(1, 6.5, isTouched: i == touchedIndex);
-          case 2:
-            return makeGroupData(2, 5, isTouched: i == touchedIndex);
-          case 3:
-            return makeGroupData(3, 7.5, isTouched: i == touchedIndex);
-          case 4:
-            return makeGroupData(4, 9, isTouched: i == touchedIndex);
-          case 5:
-            return makeGroupData(5, 11.5, isTouched: i == touchedIndex);
-          case 6:
-            return makeGroupData(6, 6.5, isTouched: i == touchedIndex);
-          default:
-            return throw Error();
-        }
-      });
+  LineChartData get sampleData1 => LineChartData(
+        lineTouchData: lineTouchData2,
+        gridData: gridData,
+        titlesData: titlesData2,
+        borderData: borderData,
+        lineBarsData: lineBarsData1,
+        minX: 0,
+        maxX: 14,
+        maxY: 1,
+        minY: 0,
+      );
 
-  BarChartData mainBarData() {
-    return BarChartData(
-      barTouchData: BarTouchData(
-        touchTooltipData: BarTouchTooltipData(
-          getTooltipColor: (_) => Colors.blueGrey,
-          tooltipHorizontalAlignment: FLHorizontalAlignment.right,
-          tooltipMargin: -10,
-          getTooltipItem: (group, groupIndex, rod, rodIndex) {
-            String weekDay;
-            switch (group.x) {
-              case 0:
-                weekDay = '월요일 학습률';
-                break;
-              case 1:
-                weekDay = '화요일';
-                break;
-              case 2:
-                weekDay = '수요일';
-                break;
-              case 3:
-                weekDay = '목요일';
-                break;
-              case 4:
-                weekDay = '금요일';
-                break;
-              case 5:
-                weekDay = '토요일';
-                break;
-              case 6:
-                weekDay = '일요일';
-                break;
-              default:
-                throw Error();
-            }
-            return BarTooltipItem(
-              '$weekDay\n',
-              const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-              ),
-              children: <TextSpan>[
-                TextSpan(
-                  text: (rod.toY - 1).toString(),
-                  style: const TextStyle(
-                    color: Colors.white, //widget.touchedBarColor,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ],
-            );
-          },
+  LineChartData get sampleData2 => LineChartData(
+        lineTouchData: lineTouchData2,
+        gridData: gridData,
+        titlesData: titlesData2,
+        borderData: borderData,
+        lineBarsData: lineBarsData2,
+        minX: 0,
+        maxX: 14,
+        maxY: 1,
+        minY: 0,
+      );
+
+  FlTitlesData get titlesData1 => FlTitlesData(
+        bottomTitles: AxisTitles(
+          sideTitles: bottomTitles,
         ),
-        touchCallback: (FlTouchEvent event, barTouchResponse) {
-          setState(() {
-            if (!event.isInterestedForInteractions ||
-                barTouchResponse == null ||
-                barTouchResponse.spot == null) {
-              touchedIndex = -1;
-              return;
-            }
-            touchedIndex = barTouchResponse.spot!.touchedBarGroupIndex;
-          });
-        },
-      ),
-      titlesData: FlTitlesData(
-        show: true,
         rightTitles: const AxisTitles(
           sideTitles: SideTitles(showTitles: false),
         ),
         topTitles: const AxisTitles(
           sideTitles: SideTitles(showTitles: false),
         ),
-        bottomTitles: AxisTitles(
-          sideTitles: SideTitles(
-            showTitles: true,
-            getTitlesWidget: getTitles,
-            reservedSize: 38,
-          ),
+        leftTitles: AxisTitles(
+          sideTitles: leftTitles(),
         ),
-        leftTitles: const AxisTitles(
-          sideTitles: SideTitles(
-            showTitles: false,
-          ),
-        ),
-      ),
-      borderData: FlBorderData(
-        show: false,
-      ),
-      barGroups: showingGroups(),
-      gridData: const FlGridData(show: false),
-    );
-  }
+      );
 
-  Widget getTitles(double value, TitleMeta meta) {
+  LineTouchData get lineTouchData2 => const LineTouchData(
+        enabled: false,
+      );
+
+  FlTitlesData get titlesData2 => FlTitlesData(
+        bottomTitles: AxisTitles(
+          sideTitles: bottomTitles,
+        ),
+        rightTitles: const AxisTitles(
+          sideTitles: SideTitles(showTitles: false),
+        ),
+        topTitles: const AxisTitles(
+          sideTitles: SideTitles(showTitles: false),
+        ),
+        leftTitles: AxisTitles(
+          sideTitles: leftTitles(),
+        ),
+      );
+
+  List<LineChartBarData> get lineBarsData2 => [
+        lineChartBarData2_2,
+      ];
+  List<LineChartBarData> get lineBarsData1 => [
+        lineChartBarData2_1,
+      ];
+
+  Widget leftTitleWidgets(double value, TitleMeta meta) {
     const style = TextStyle(
-      color: Colors.black,
       fontWeight: FontWeight.bold,
       fontSize: 14,
     );
-    Widget text;
+    String text;
     switch (value.toInt()) {
       case 0:
-        text = const Text('월', style: style);
+        text = '0%';
         break;
       case 1:
-        text = const Text('화', style: style);
-        break;
-      case 2:
-        text = const Text('수', style: style);
-        break;
-      case 3:
-        text = const Text('목', style: style);
-        break;
-      case 4:
-        text = const Text('금', style: style);
-        break;
-      case 5:
-        text = const Text('토', style: style);
-        break;
-      case 6:
-        text = const Text('일', style: style);
+        text = '100%';
         break;
       default:
-        text = const Text('', style: style);
+        return Container();
+    }
+
+    return Text(text, style: style, textAlign: TextAlign.center);
+  }
+
+  SideTitles leftTitles() => SideTitles(
+        getTitlesWidget: leftTitleWidgets,
+        showTitles: true,
+        interval: 1,
+        reservedSize: 40,
+      );
+
+  Widget bottomTitleWidgets(double value, TitleMeta meta) {
+    const style = TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: 16,
+    );
+    Widget text;
+    switch (value.toInt()) {
+      case 1:
+        text = const Text('1월', style: style);
+        break;
+      case 6:
+        text = const Text('6월', style: style);
+        break;
+      case 12:
+        text = const Text('12월', style: style);
+        break;
+      default:
+        text = const Text('');
         break;
     }
+
     return SideTitleWidget(
       axisSide: meta.axisSide,
-      space: 16,
+      space: 10,
       child: text,
     );
   }
 
-  BarChartData randomData() {
-    return BarChartData(
-      barTouchData: BarTouchData(
-        enabled: false,
-      ),
-      titlesData: FlTitlesData(
+  SideTitles get bottomTitles => SideTitles(
+        showTitles: true,
+        reservedSize: 32,
+        interval: 1,
+        getTitlesWidget: bottomTitleWidgets,
+      );
+
+  FlGridData get gridData => const FlGridData(show: false);
+
+  FlBorderData get borderData => FlBorderData(
         show: true,
-        bottomTitles: AxisTitles(
-          sideTitles: SideTitles(
-            showTitles: true,
-            getTitlesWidget: getTitles,
-            reservedSize: 38,
-          ),
+        border: const Border(
+          bottom: BorderSide(color: Colors.black12, width: 4),
+          left: BorderSide(color: Colors.transparent),
+          right: BorderSide(color: Colors.transparent),
+          top: BorderSide(color: Colors.transparent),
         ),
-        leftTitles: const AxisTitles(
-          sideTitles: SideTitles(
-            showTitles: false,
-          ),
+      );
+
+  LineChartBarData get lineChartBarData2_2 => LineChartBarData(
+        isCurved: true,
+        color: colorBottomBarDefault,
+        barWidth: 4,
+        isStrokeCapRound: true,
+        dotData: const FlDotData(show: true),
+        belowBarData: BarAreaData(
+          show: true,
+          color: colorBottomBarDefault.withOpacity(0.1),
         ),
-        topTitles: const AxisTitles(
-          sideTitles: SideTitles(
-            showTitles: false,
-          ),
+        spots: const [
+          // FlSpot(0, 0),
+          FlSpot(1, 0.68),
+          FlSpot(2, 0.65),
+          FlSpot(3, 0.84),
+          FlSpot(4, 0.33),
+          FlSpot(5, 0.30),
+          FlSpot(6, 0.90),
+          FlSpot(7, 0.97),
+          FlSpot(8, 0.17),
+          FlSpot(9, 0.77),
+          FlSpot(10, 0.19),
+          FlSpot(11, 0.65),
+          FlSpot(12, 0.73),
+        ],
+      );
+  LineChartBarData get lineChartBarData2_1 => LineChartBarData(
+        isCurved: true,
+        color: colorBottomBarDefault,
+        barWidth: 4,
+        isStrokeCapRound: true,
+        dotData: const FlDotData(show: true),
+        belowBarData: BarAreaData(
+          show: true,
+          color: colorBottomBarDefault.withOpacity(0.1),
         ),
-        rightTitles: const AxisTitles(
-          sideTitles: SideTitles(
-            showTitles: false,
-          ),
-        ),
-      ),
-      borderData: FlBorderData(
-        show: false,
-      ),
-      barGroups: List.generate(7, (i) {
-        switch (i) {
-          case 0:
-            return makeGroupData(
-              0,
-              Random().nextInt(15).toDouble() + 6,
-              barColor: widget.availableColors[
-                  Random().nextInt(widget.availableColors.length)],
-            );
-          case 1:
-            return makeGroupData(
-              1,
-              Random().nextInt(15).toDouble() + 6,
-              barColor: widget.availableColors[
-                  Random().nextInt(widget.availableColors.length)],
-            );
-          case 2:
-            return makeGroupData(
-              2,
-              Random().nextInt(15).toDouble() + 6,
-              barColor: widget.availableColors[
-                  Random().nextInt(widget.availableColors.length)],
-            );
-          case 3:
-            return makeGroupData(
-              3,
-              Random().nextInt(15).toDouble() + 6,
-              barColor: widget.availableColors[
-                  Random().nextInt(widget.availableColors.length)],
-            );
-          case 4:
-            return makeGroupData(
-              4,
-              Random().nextInt(15).toDouble() + 6,
-              barColor: widget.availableColors[
-                  Random().nextInt(widget.availableColors.length)],
-            );
-          case 5:
-            return makeGroupData(
-              5,
-              Random().nextInt(15).toDouble() + 6,
-              barColor: widget.availableColors[
-                  Random().nextInt(widget.availableColors.length)],
-            );
-          case 6:
-            return makeGroupData(
-              6,
-              Random().nextInt(15).toDouble() + 6,
-              barColor: widget.availableColors[
-                  Random().nextInt(widget.availableColors.length)],
-            );
-          default:
-            return throw Error();
-        }
-      }),
-      gridData: const FlGridData(show: false),
-    );
-  }
+        spots: const [
+          FlSpot(0, 0),
+          FlSpot(12, 1),
+          FlSpot(3, 1),
+          FlSpot(4, 1),
+          FlSpot(5, 1),
+        ],
+      );
 }

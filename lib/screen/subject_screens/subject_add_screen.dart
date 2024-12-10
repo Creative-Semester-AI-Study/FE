@@ -4,7 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
 import 'package:study_helper/api/service/subject_service.dart';
-import 'package:study_helper/bottom_bar.dart';
+import 'package:study_helper/util/bottom_bar.dart';
 import 'package:study_helper/model/user/user_preferences.dart';
 import 'package:study_helper/theme/theme_colors.dart';
 

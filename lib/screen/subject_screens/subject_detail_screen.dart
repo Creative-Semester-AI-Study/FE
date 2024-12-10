@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:study_helper/api/service/subject_service.dart';
 import 'package:study_helper/api/service/auth_service.dart';
 import 'package:study_helper/api/load/load_reviews.dart';
-import 'package:study_helper/bottom_bar.dart';
+import 'package:study_helper/util/bottom_bar.dart';
 import 'package:study_helper/model/review/review_model.dart';
 import 'package:study_helper/model/subject/subject_model.dart';
 import 'package:study_helper/theme/theme_colors.dart';
