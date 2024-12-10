@@ -228,12 +228,14 @@ class _StudyScreenState extends State<StudyScreen> {
                                     SubjectModel subject = entry.value;
                                     bool isLast =
                                         index == snapshot.data!.length - 1;
-                                    if (subject.learningStatus == '학습 후') {
+                                    if (subject.learningStatus == '학습 후' &&
+                                        timeValdation(subject.startTime,
+                                            subject.endTime)) {
                                       return completedCard(
-                                        subjectName: subject.subjectName,
-                                        timeText:
-                                            "${subject.startTimeCoverted()} ~ ${subject.endTimeCoverted()}",
+                                        context: context,
+                                        subjectModel: subject,
                                         isLast: isLast,
+                                        dateTime: _selectedDay,
                                       );
                                     } else if (subject.learningStatus ==
                                             '학습 전' &&
@@ -305,10 +307,10 @@ class _StudyScreenState extends State<StudyScreen> {
                                         index == snapshot.data!.length - 1;
                                     if (subject.learningStatus == 'false') {
                                       return completedCard(
-                                        subjectName: subject.subjectName,
-                                        timeText:
-                                            "${subject.startTimeCoverted()} ~ ${subject.endTimeCoverted()}",
+                                        context: context,
+                                        subjectModel: subject,
                                         isLast: isLast,
+                                        dateTime: _selectedDay,
                                       );
                                     } else {
                                       return ongoingCard(

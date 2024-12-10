@@ -148,8 +148,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     },
                   ),
                   ListTile(
-                    leading: const Icon(Icons.history),
-                    title: const Text('주문 내역'),
+                    leading: const Icon(Icons.edit),
+                    title: const Text('과목 수정'),
                     trailing: const Icon(Icons.arrow_forward_ios),
                     onTap: () {
                       // 주문 내역 페이지로 이동
@@ -157,7 +157,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   ListTile(
                     leading: const Icon(Icons.favorite),
-                    title: const Text('찜 목록'),
+                    title: const Text('개발자 목록'),
                     trailing: const Icon(Icons.arrow_forward_ios),
                     onTap: () {
                       // 찜 목록 페이지로 이동

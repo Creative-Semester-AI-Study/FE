@@ -1,8 +1,11 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:study_helper/api/api_consts.dart';
+import 'package:study_helper/api/service/auth_service.dart';
 import 'package:study_helper/model/subject/subject_model.dart';
 import 'package:study_helper/screen/summary_screens/quiz_screen.dart';
 import 'package:study_helper/screen/summary_screens/summary_ongoing_screen.dart';
@@ -27,11 +30,68 @@ class LessonScreen extends StatefulWidget {
 
 class _LessonScreenState extends State<LessonScreen> {
   final TextEditingController _textEditingController = TextEditingController();
+  final Dio _dio = Dio();
+  bool _isLoading = true;
+  int id = 0;
+  String _summaryText = '';
   void _showSummaryRequiredDialog() {
     Get.snackbar('오류', '요약 내용을 먼저 작성해주세요',
         backgroundColor: Colors.redAccent, colorText: Colors.white);
   }
 
+  Future<void> _loadSummaryText() async {
+    if (widget.isValid) {
+      setState(() {
+        _isLoading = true;
+      });
+
+      try {
+        final token = await AuthService().getToken();
+        final response = await _dio.post(
+          '$url/api/summaries/find/summary',
+          options: Options(
+            headers: {
+              'Authorization': token,
+            },
+            validateStatus: (_) => true,
+            contentType: Headers.jsonContentType,
+            responseType: ResponseType.json,
+          ),
+          data: {
+            'subjectId': widget.subjectModel.id,
+            'date': DateFormat('yyyy-MM-dd').format(widget.dateTime),
+          },
+        );
+
+        if (response.statusCode == 200) {
+          setState(() {
+            _summaryText = response.data['summaryText'] ?? '';
+            id = response.data['id'] ?? 0;
+            _isLoading = false;
+          });
+        } else {
+          throw Exception('Failed to load summary');
+        }
+      } catch (e) {
+        print('Error loading summary: $e');
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    } else {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSummaryText();
+  }
+
+  // void
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,30 +170,37 @@ class _LessonScreenState extends State<LessonScreen> {
                 child: Padding(
                   padding: const EdgeInsets.only(right: 10.0),
                   child: widget.isValid
-                      ? const Scrollbar(
-                          thickness: 2, // 스크롤바의 두께
-                          radius: Radius.circular(100), // 스크롤바 모서리의 둥근 정도
-                          thumbVisibility: false,
-                          child: Padding(
-                              padding:
-                                  EdgeInsets.only(top: 0, left: 30, right: 20),
-                              child: SingleChildScrollView(
-                                child: Column(
-                                  children: [
-                                    Gap(30),
-                                    Text(
-                                      '',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        wordSpacing: 1.1,
-                                        letterSpacing: 1.3,
-                                        fontSize: 14.0,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              )),
-                        )
+                      ? _isLoading
+                          ? const Center(
+                              child: CircularProgressIndicator(
+                                color: colorBottomBarDefault,
+                              ),
+                            )
+                          : Scrollbar(
+                              thickness: 2, // 스크롤바의 두께
+                              radius:
+                                  const Radius.circular(100), // 스크롤바 모서리의 둥근 정도
+                              thumbVisibility: false,
+                              child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 0, left: 30, right: 20),
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      children: [
+                                        const Gap(30),
+                                        Text(
+                                          _summaryText,
+                                          style: const TextStyle(
+                                            color: Colors.black,
+                                            wordSpacing: 1.1,
+                                            letterSpacing: 1.3,
+                                            fontSize: 14.0,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  )),
+                            )
                       : TextField(
                           controller: _textEditingController,
                           decoration: const InputDecoration(
