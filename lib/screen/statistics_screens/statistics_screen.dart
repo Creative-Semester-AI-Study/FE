@@ -6,7 +6,11 @@ import 'package:dio/dio.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:study_helper/api/api_consts.dart';
 import 'package:study_helper/api/load/load_statstics.dart';
+import 'package:study_helper/api/service/auth_service.dart';
+import 'package:study_helper/model/quiz/study_session.dart';
+import 'package:study_helper/screen/statistics_screens/recent_quiz.dart';
 import 'package:study_helper/theme/theme_colors.dart';
 
 class StatisticsScreen extends StatefulWidget {
@@ -23,6 +27,9 @@ class StatisticsScreen extends StatefulWidget {
 
 class StatisticsScreenState extends State<StatisticsScreen> {
   CancelToken? _cancelToken;
+  late List<StudySession> studySessions;
+  late Future<void> _isLoaded;
+
   final Duration animDuration = const Duration(milliseconds: 250);
   List<FlSpot> _futureDataSet = [];
   bool test = false;
@@ -34,6 +41,46 @@ class StatisticsScreenState extends State<StatisticsScreen> {
   void initState() {
     super.initState();
     _cancelToken = CancelToken();
+    _isLoaded = loadStudySessions();
+  }
+
+  Future<void> loadStudySessions() async {
+    try {
+      studySessions = await _studySessions();
+      setState(() {
+        // UI 업데이트
+      });
+    } catch (e) {
+      print('Error: $e');
+      // 에러 처리
+    }
+  }
+
+  Future<List<StudySession>> _studySessions() async {
+    final Dio dio = Dio();
+    final String? token = await AuthService().getToken();
+
+    try {
+      final response = await dio.get(
+        '$url/quiz/recent', // API 엔드포인트를 적절히 수정해주세요
+        options: Options(
+          headers: {
+            'Authorization': '$token',
+          },
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        List<dynamic> data = response.data;
+        return data.map((json) => StudySession.fromJson(json)).toList();
+      } else if (response.data == 500) {
+        return [];
+      }
+    } catch (e) {
+      print('Error fetching study sessions: $e');
+      throw Exception('Failed to load study sessions');
+    }
+    return [];
   }
 
   @override
@@ -168,85 +215,35 @@ class StatisticsScreenState extends State<StatisticsScreen> {
                 ),
                 const Gap(20),
                 Flexible(
-                  child: Swiper(
-                    itemBuilder: (BuildContext context, int index) {
-                      return Card(
-                        color: Colors.white,
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
+                  child: FutureBuilder(
+                    future: _isLoaded,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(
+                            color: colorBottomBarDefault,
+                          ),
+                        );
+                      } else if (snapshot.hasData) {
+                        return StudySessionsWidget(
+                            studySessions: studySessions);
+                      } else {
+                        return const Center(
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              const Text(
-                                "운영체제 3회차",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                  color: colorDefault,
-                                ),
-                              ),
-                              const Gap(4),
-                              const Text(
-                                "학습일 : 11/20/24",
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                  color: colorDefault,
-                                ),
-                              ),
-                              // const Gap(10),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Expanded(
-                                    child: CircleChart(
-                                      progressColor: colorBottomBarSelected,
-                                      showRate: true,
-                                      progressNumber: 4,
-                                      maxNumber: 10,
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          width: 60,
-                                          height: 60,
-                                          decoration: const BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: Colors.red,
-                                          ),
-                                          child: const Icon(
-                                            Icons.do_disturb_outlined,
-                                            color: Colors.white,
-                                            size: 30,
-                                          ),
-                                        ),
-                                        const Gap(10),
-                                        const Text(
-                                          "오답 복습 미완료",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w600),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ],
+                              Icon(Icons.question_mark_outlined),
+                              Gap(12),
+                              Text(
+                                '학습을 진행한 적이 없습니다.',
+                                style: TextStyle(fontWeight: FontWeight.w700),
                               ),
                             ],
                           ),
-                        ),
-                      );
+                        );
+                      }
                     },
-                    // layout: SwiperLayout.STACK,
-                    itemCount: 3,
-                    viewportFraction: 0.9,
-                    loop: false,
-                    // pagination: const SwiperPagination(),
-                    // control: const SwiperControl(
-                    //   iconNext: IconData(0),
-                    //   iconPrevious: Icons.empty,
-                    // ),
                   ),
                 ),
                 const SizedBox(
