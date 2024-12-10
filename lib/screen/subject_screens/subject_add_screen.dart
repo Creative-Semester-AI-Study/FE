@@ -336,14 +336,22 @@ class _SubjectAddScreenState extends State<SubjectAddScreen> {
                   ),
                 ),
               ),
-              RoundedLoadingButton(
-                width: MediaQuery.of(context).size.width,
-                controller: _roundedLoadingButton,
-                color: colorBottomBarDefault,
-                onPressed: () {
-                  _addSubject();
-                },
-                child: const Text('과목 추가'),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    RoundedLoadingButton(
+                      width: MediaQuery.of(context).size.width,
+                      controller: _roundedLoadingButton,
+                      color: colorBottomBarDefault,
+                      onPressed: () {
+                        _addSubject();
+                      },
+                      child: const Text('과목 추가'),
+                    ),
+                    const Gap(30),
+                  ],
+                ),
               ),
             ],
           ),

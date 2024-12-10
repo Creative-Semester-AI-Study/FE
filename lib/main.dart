@@ -82,6 +82,12 @@ class MyApp extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           } else {
             if (snapshot.hasData && snapshot.data == true) {
+              GetPage(
+                name: '/bottomBar',
+                page: () => const BottomBar(
+                  index: 0,
+                ),
+              );
               return const BottomBar(index: 0);
             } else {
               return const LoginScreen();
