@@ -6,19 +6,11 @@ import 'package:dio/dio.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:study_helper/api/load/load_statstics.dart';
 import 'package:study_helper/theme/theme_colors.dart';
 
-class BarChartSample1 extends StatefulWidget {
-  BarChartSample1({super.key});
-
-  List<Color> get availableColors => const <Color>[
-        AppColors.contentColorPurple,
-        AppColors.contentColorYellow,
-        AppColors.contentColorBlue,
-        AppColors.contentColorOrange,
-        AppColors.contentColorPink,
-        AppColors.contentColorRed,
-      ];
+class StatisticsScreen extends StatefulWidget {
+  StatisticsScreen({super.key});
 
   final Color barBackgroundColor =
       AppColors.contentColorWhite.darken().withOpacity(0.3);
@@ -26,13 +18,64 @@ class BarChartSample1 extends StatefulWidget {
   final Color touchedBarColor = colorBottomBarDefault;
 
   @override
-  State<StatefulWidget> createState() => BarChartSample1State();
+  State<StatefulWidget> createState() => StatisticsScreenState();
 }
 
-class BarChartSample1State extends State<BarChartSample1> {
+class StatisticsScreenState extends State<StatisticsScreen> {
+  CancelToken? _cancelToken;
   final Duration animDuration = const Duration(milliseconds: 250);
+  List<FlSpot> _futureDataSet = [];
   bool test = false;
+  bool isLoaded = false;
   int touchedIndex = -1;
+  bool isLoading = false;
+  double loadingProgress = 0.0;
+  @override
+  void initState() {
+    super.initState();
+    _cancelToken = CancelToken();
+  }
+
+  @override
+  void dispose() {
+    _cancelToken?.cancel("Widget is disposing");
+    super.dispose();
+  }
+
+  Future<void> loadDataSet() async {
+    if (_cancelToken?.isCancelled ?? false) {
+      _cancelToken = CancelToken();
+    }
+
+    setState(() {
+      isLoading = true;
+      loadingProgress = 0.0;
+    });
+
+    try {
+      _futureDataSet = await loadStatistics(
+        onProgress: (progress) {
+          setState(() {
+            loadingProgress = progress;
+          });
+        },
+        cancelToken: _cancelToken,
+      );
+      isLoaded = true;
+    } catch (e) {
+      if (e is DioException && e.type == DioExceptionType.cancel) {
+        print('Request was cancelled');
+      } else {
+        print('Error loading data: $e');
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,37 +97,62 @@ class BarChartSample1State extends State<BarChartSample1> {
                     color: colorDefault,
                   ),
                 ),
-                TextButton(
-                  onPressed: () {
-                    setState(() {
-                      test = !test;
-                    });
-                  },
-                  child: const Text('asd'),
-                ),
                 const Gap(12),
                 const Divider(),
                 const Gap(4),
-                const Text(
-                  "월별 학습 통계",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                    color: colorDefault,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "월별 학습 통계",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                        color: colorDefault,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        setState(() {
+                          if (!test && !isLoaded) {
+                            loadDataSet();
+                          } else {
+                            _cancelToken?.cancel("Widget is disposing");
+                          }
+                          test = !test;
+                        });
+                      },
+                      style: const ButtonStyle(
+                        foregroundColor:
+                            WidgetStatePropertyAll(colorBottomBarDefault),
+                      ),
+                      child: Text(test ? 'TEST DATA MODE' : 'API MODE'),
+                    ),
+                  ],
                 ),
-                // const Text(
-                //   "요일별 통계",
-                //   style: TextStyle(
-                //     fontSize: 14,
-                //     fontWeight: FontWeight.w600,
-                //     color: colorDefault,
-                //   ),
-                // ),
                 const Gap(38),
                 Expanded(
-                  child: _LineChart(
-                    isShowingMainData: test,
+                  child: Stack(
+                    children: [
+                      if (isLoading)
+                        Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              CircularProgressIndicator(
+                                  color: colorBottomBarDefault,
+                                  value: loadingProgress),
+                              const Gap(5),
+                              Text(
+                                  '${(loadingProgress * 100).toStringAsFixed(0)}%'),
+                            ],
+                          ),
+                        ),
+                      _LineChart(
+                        isShowingMainData: test,
+                        futureDataSet: _futureDataSet,
+                      ),
+                    ],
                   ),
                 ),
                 const Gap(20),
@@ -194,8 +262,9 @@ class BarChartSample1State extends State<BarChartSample1> {
 }
 
 class _LineChart extends StatelessWidget {
-  const _LineChart({required this.isShowingMainData});
-
+  const _LineChart(
+      {required this.isShowingMainData, required this.futureDataSet});
+  final List<FlSpot> futureDataSet;
   final bool isShowingMainData;
 
   @override
@@ -268,7 +337,7 @@ class _LineChart extends StatelessWidget {
         lineChartBarData2_2,
       ];
   List<LineChartBarData> get lineBarsData1 => [
-        lineChartBarData2_1,
+        lineChartBarData2_1(),
       ];
 
   Widget leftTitleWidgets(double value, TitleMeta meta) {
@@ -306,13 +375,43 @@ class _LineChart extends StatelessWidget {
     Widget text;
     switch (value.toInt()) {
       case 1:
-        text = const Text('1월', style: style);
+        text = const Text('1', style: style);
+        break;
+      case 2:
+        text = const Text('2', style: style);
+        break;
+      case 3:
+        text = const Text('3', style: style);
+        break;
+      case 4:
+        text = const Text('4', style: style);
+        break;
+      case 5:
+        text = const Text('5', style: style);
         break;
       case 6:
-        text = const Text('6월', style: style);
+        text = const Text('6', style: style);
+        break;
+      case 7:
+        text = const Text('7', style: style);
+        break;
+      case 8:
+        text = const Text('8', style: style);
+        break;
+      case 9:
+        text = const Text('9', style: style);
+        break;
+      case 10:
+        text = const Text('10', style: style);
+        break;
+      case 11:
+        text = const Text('11', style: style);
         break;
       case 12:
-        text = const Text('12월', style: style);
+        text = const Text('12', style: style);
+        break;
+      case 13:
+        text = const Text('(월)', style: style);
         break;
       default:
         text = const Text('');
@@ -371,22 +470,18 @@ class _LineChart extends StatelessWidget {
           FlSpot(12, 0.73),
         ],
       );
-  LineChartBarData get lineChartBarData2_1 => LineChartBarData(
-        isCurved: true,
-        color: colorBottomBarDefault,
-        barWidth: 4,
-        isStrokeCapRound: true,
-        dotData: const FlDotData(show: true),
-        belowBarData: BarAreaData(
-          show: true,
-          color: colorBottomBarDefault.withOpacity(0.1),
-        ),
-        spots: const [
-          FlSpot(0, 0),
-          FlSpot(12, 1),
-          FlSpot(3, 1),
-          FlSpot(4, 1),
-          FlSpot(5, 1),
-        ],
-      );
+  LineChartBarData lineChartBarData2_1() {
+    return LineChartBarData(
+      isCurved: true,
+      color: colorBottomBarDefault,
+      barWidth: 4,
+      isStrokeCapRound: true,
+      dotData: const FlDotData(show: true),
+      belowBarData: BarAreaData(
+        show: true,
+        color: colorBottomBarDefault.withOpacity(0.1),
+      ),
+      spots: futureDataSet,
+    );
+  }
 }

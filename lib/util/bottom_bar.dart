@@ -77,7 +77,7 @@ class _BottomBarState extends State<BottomBar> {
           children: [
             const HomeScreen(),
             const StudyScreen(),
-            BarChartSample1(),
+            StatisticsScreen(),
             const ProfileScreen(),
           ],
         ),

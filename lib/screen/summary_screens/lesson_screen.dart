@@ -89,6 +89,7 @@ class _LessonScreenState extends State<LessonScreen> {
             const Gap(10),
             const Expanded(
               child: Card(
+                color: Colors.white,
                 child: Padding(
                   padding: EdgeInsets.only(right: 10.0),
                   child: Scrollbar(
