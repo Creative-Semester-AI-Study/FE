@@ -70,7 +70,8 @@ class SubjectModel {
       professorName: json['professorName'] ?? '',
       startTime: json['startTime'] ?? '',
       endTime: json['endTime'] ?? '',
-      learningStatus: json['learningStatus'] ?? '',
+      learningStatus:
+          json['learningStatus'] ?? json['reviewed'].toString() ?? '',
       days: json['days'] ?? '',
     );
   }

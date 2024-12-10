@@ -241,10 +241,9 @@ class _StudyScreenState extends State<StudyScreen> {
                                             subject.endTime)) {
                                       return ongoingCard(
                                         context: context,
-                                        subjectName: subject.subjectName,
-                                        timeText:
-                                            "${subject.startTimeCoverted()} ~ ${subject.endTimeCoverted()}",
+                                        subjectModel: subject,
                                         isLast: isLast,
+                                        dateTime: _selectedDay,
                                       );
                                     } else {
                                       return disabledCard(
@@ -304,29 +303,18 @@ class _StudyScreenState extends State<StudyScreen> {
                                     SubjectModel subject = entry.value;
                                     bool isLast =
                                         index == snapshot.data!.length - 1;
-                                    if (subject.learningStatus == '학습 후') {
+                                    if (subject.learningStatus == 'false') {
                                       return completedCard(
                                         subjectName: subject.subjectName,
                                         timeText:
                                             "${subject.startTimeCoverted()} ~ ${subject.endTimeCoverted()}",
                                         isLast: isLast,
                                       );
-                                    } else if (subject.learningStatus ==
-                                            '학습 전' &&
-                                        timeValdation(subject.startTime,
-                                            subject.endTime)) {
-                                      return ongoingCard(
-                                        context: context,
-                                        subjectName: subject.subjectName,
-                                        timeText:
-                                            "${subject.startTimeCoverted()} ~ ${subject.endTimeCoverted()}",
-                                        isLast: isLast,
-                                      );
                                     } else {
-                                      return disabledCard(
-                                        subjectName: subject.subjectName,
-                                        timeText:
-                                            "${subject.startTimeCoverted()} ~ ${subject.startTimeCoverted()}",
+                                      return ongoingCard(
+                                        dateTime: _selectedDay,
+                                        context: context,
+                                        subjectModel: subject,
                                         isLast: isLast,
                                       );
                                     }

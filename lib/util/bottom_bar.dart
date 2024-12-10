@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:study_helper/util/bottom_bar_icon.dart';
 import 'package:study_helper/screen/home_screen.dart';
 import 'package:study_helper/screen/profile_screen.dart';

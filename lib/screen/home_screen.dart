@@ -119,7 +119,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         onTap: () async {
                           print(await AuthService().getToken());
                           print(nextSubject.toJson().toString());
-                          Get.to(() => const LessonScreen(title: '데이터베이스'));
+                          Get.to(() => LessonScreen(
+                                subjectModel: nextSubject,
+                                dateTime: DateTime.now(),
+                                isValid: false,
+                              ));
                         },
                         child: Card(
                           color: colorBottomBarDefault,

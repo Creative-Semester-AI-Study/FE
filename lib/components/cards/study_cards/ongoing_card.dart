@@ -1,14 +1,15 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:study_helper/model/subject/subject_model.dart';
 import 'package:study_helper/screen/summary_screens/lesson_screen.dart';
 import 'package:study_helper/theme/theme_colors.dart';
 
 Widget ongoingCard({
   required BuildContext context,
-  required String subjectName,
-  required String timeText,
+  required SubjectModel subjectModel,
   required bool isLast,
+  required DateTime dateTime,
 }) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -47,11 +48,15 @@ Widget ongoingCard({
           child: GestureDetector(
             onTap: () {
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => LessonScreen(
-                            title: subjectName,
-                          )));
+                context,
+                MaterialPageRoute(
+                  builder: (context) => LessonScreen(
+                    dateTime: dateTime,
+                    subjectModel: subjectModel,
+                    isValid: false,
+                  ),
+                ),
+              );
             },
             child: Card(
               elevation: 1,
@@ -67,7 +72,7 @@ Widget ongoingCard({
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         AutoSizeText(
-                          subjectName,
+                          subjectModel.subjectName,
                           maxLines: 1,
                           style: const TextStyle(
                             color: Colors.white,
@@ -76,7 +81,7 @@ Widget ongoingCard({
                         ),
                         const Gap(2),
                         Text(
-                          timeText,
+                          '${subjectModel.startTimeCoverted()}~${subjectModel.endTimeCoverted()}',
                           style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w500,

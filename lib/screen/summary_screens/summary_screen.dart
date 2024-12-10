@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:study_helper/model/subject/subject_model.dart';
 import 'package:study_helper/theme/theme_colors.dart';
 
 class SummaryScreen extends StatefulWidget {

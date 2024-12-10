@@ -13,7 +13,12 @@ class SubjectService {
     try {
       final response = await _dio.delete(
         '$url/study/subject/$id',
-        options: Options(headers: {'Authorization': token}),
+        options: Options(
+          headers: {'Authorization': token},
+          validateStatus: (_) => true,
+          contentType: Headers.jsonContentType,
+          responseType: ResponseType.json,
+        ),
       );
       if (response.statusCode == 200) {
         await SubjectPreferences.removeSubject(id);

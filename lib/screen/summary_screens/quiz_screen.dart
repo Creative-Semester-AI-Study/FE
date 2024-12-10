@@ -140,12 +140,13 @@ class _QuizScreenState extends State<QuizScreen> {
                         color: colorBottomBarDefault,
                         child: GestureDetector(
                           onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const SummaryScreen(),
-                              ),
-                            );
+                            //TODO
+                            // // Navigator.push(
+                            // //   context,
+                            // //   MaterialPageRoute(
+                            // //     builder: (context) => const SummaryScreen(),
+                            // //   ),
+                            // );
                           },
                           child: const Padding(
                             padding: EdgeInsets.all(20.0),
