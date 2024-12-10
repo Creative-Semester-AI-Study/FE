@@ -77,6 +77,13 @@ class _LessonScreenState extends State<LessonScreen> {
         setState(() {
           _isLoading = false;
         });
+        Get.snackbar('오류', '요약 내용을 불러올 수 없습니다.',
+            backgroundColor: Colors.redAccent, colorText: Colors.white);
+        Get.offAll(
+          () => const BottomBar(index: 1),
+          transition: Transition.leftToRight,
+          duration: const Duration(milliseconds: 300),
+        );
       }
     } else {
       setState(() {
@@ -88,6 +95,7 @@ class _LessonScreenState extends State<LessonScreen> {
   @override
   void initState() {
     super.initState();
+    print(widget.dateTime);
     _loadSummaryText();
   }
 

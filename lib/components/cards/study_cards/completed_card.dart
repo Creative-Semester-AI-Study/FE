@@ -52,7 +52,8 @@ Widget completedCard({
                 context,
                 MaterialPageRoute(
                   builder: (context) => LessonScreen(
-                    dateTime: dateTime,
+                    // dateTime: dateTime,
+                    dateTime: DateTime.now(),
                     subjectModel: subjectModel,
                     isValid: true,
                   ),

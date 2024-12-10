@@ -9,6 +9,7 @@ Widget ongoingCard({
   required BuildContext context,
   required SubjectModel subjectModel,
   required bool isLast,
+  required bool isReview,
   required DateTime dateTime,
 }) {
   return Row(
@@ -51,7 +52,8 @@ Widget ongoingCard({
                 context,
                 MaterialPageRoute(
                   builder: (context) => LessonScreen(
-                    dateTime: dateTime,
+                    // dateTime: dateTime,
+                    dateTime: DateTime.now(),
                     subjectModel: subjectModel,
                     isValid: false,
                   ),
@@ -90,14 +92,14 @@ Widget ongoingCard({
                       ],
                     ),
                     const Gap(30),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Text(""), //blank widget for space
+                        const Text(""), //blank widget for space
                         Text(
-                          "녹음 시작 >",
-                          style: TextStyle(
+                          isReview ? "복습 시작 >" : "녹음 시작 >",
+                          style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w700,
                           ),

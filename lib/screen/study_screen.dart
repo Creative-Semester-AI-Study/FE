@@ -242,6 +242,7 @@ class _StudyScreenState extends State<StudyScreen> {
                                         timeValdation(subject.startTime,
                                             subject.endTime)) {
                                       return ongoingCard(
+                                        isReview: false,
                                         context: context,
                                         subjectModel: subject,
                                         isLast: isLast,
@@ -306,14 +307,15 @@ class _StudyScreenState extends State<StudyScreen> {
                                     bool isLast =
                                         index == snapshot.data!.length - 1;
                                     if (subject.learningStatus == 'false') {
-                                      return completedCard(
+                                      return ongoingCard(
+                                        isReview: true,
                                         context: context,
                                         subjectModel: subject,
                                         isLast: isLast,
                                         dateTime: _selectedDay,
                                       );
                                     } else {
-                                      return ongoingCard(
+                                      return completedCard(
                                         dateTime: _selectedDay,
                                         context: context,
                                         subjectModel: subject,
