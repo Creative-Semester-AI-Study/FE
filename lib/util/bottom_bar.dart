@@ -18,7 +18,7 @@ class BottomBar extends StatefulWidget {
 class _BottomBarState extends State<BottomBar> {
   late int selected;
   bool heart = false;
-  late final controller;
+  late final PageController controller;
   @override
   void initState() {
     selected = widget.index;
@@ -77,7 +77,7 @@ class _BottomBarState extends State<BottomBar> {
           children: [
             const HomeScreen(),
             const StudyScreen(),
-            BarChartSample1(),
+            StatisticsScreen(),
             const ProfileScreen(),
           ],
         ),

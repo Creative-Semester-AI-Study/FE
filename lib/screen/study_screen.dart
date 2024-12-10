@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
@@ -32,6 +31,26 @@ class _StudyScreenState extends State<StudyScreen> {
 
   String formatDate(DateTime date) {
     return DateFormat('yyyy-MM-dd').format(date);
+  }
+
+  bool timeValdation(String startTimeStr, String endTimeStr) {
+    // 현재 시간을 가져옵니다.
+    DateTime now = DateTime.now();
+
+    // 시작 시간과 종료 시간을 파싱합니다.
+    List<int> startTimeParts = startTimeStr.split(':').map(int.parse).toList();
+
+    // 오늘 날짜의 시작 시간과 종료 시간을 생성합니다.
+    DateTime startTime = DateTime(
+        _selectedDay.year,
+        _selectedDay.month,
+        _selectedDay.day,
+        startTimeParts[0],
+        startTimeParts[1],
+        startTimeParts[2]);
+    // 현재 시간이 시작 시간과 종료 시간 사이인지 확인합니다.
+
+    return now.isAfter(startTime);
   }
 
   Future<List<SubjectModel>> _loadSubjectModel() async {
@@ -121,9 +140,9 @@ class _StudyScreenState extends State<StudyScreen> {
                 },
                 onDaySelected: (selectedDay, focusedDay) {
                   setState(() {
-                    _futureSubject = _loadSubjectModel();
                     _selectedDay = selectedDay;
                     _focusedDay = focusedDay;
+                    _futureSubject = _loadSubjectModel();
                   });
                 },
                 firstDay: DateTime(2024, 1, 1),
@@ -209,7 +228,7 @@ class _StudyScreenState extends State<StudyScreen> {
                                     SubjectModel subject = entry.value;
                                     bool isLast =
                                         index == snapshot.data!.length - 1;
-                                    if (subject.learningStatus == '요약 보기') {
+                                    if (subject.learningStatus == '학습 후') {
                                       return completedCard(
                                         subjectName: subject.subjectName,
                                         timeText:
@@ -217,7 +236,9 @@ class _StudyScreenState extends State<StudyScreen> {
                                         isLast: isLast,
                                       );
                                     } else if (subject.learningStatus ==
-                                        '녹음 시작') {
+                                            '학습 전' &&
+                                        timeValdation(subject.startTime,
+                                            subject.endTime)) {
                                       return ongoingCard(
                                         context: context,
                                         subjectName: subject.subjectName,
@@ -229,7 +250,7 @@ class _StudyScreenState extends State<StudyScreen> {
                                       return disabledCard(
                                         subjectName: subject.subjectName,
                                         timeText:
-                                            "${subject.startTime} ~ ${subject.endTime}",
+                                            "${subject.startTimeCoverted()} ~ ${subject.endTimeCoverted()}",
                                         isLast: isLast,
                                       );
                                     }
@@ -263,6 +284,13 @@ class _StudyScreenState extends State<StudyScreen> {
                                           fontWeight: FontWeight.w700,
                                         ),
                                       ),
+                                      const Gap(2),
+                                      const Text(
+                                        '혹은 서버 에러일지도...? ',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w300,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 );
@@ -276,7 +304,7 @@ class _StudyScreenState extends State<StudyScreen> {
                                     SubjectModel subject = entry.value;
                                     bool isLast =
                                         index == snapshot.data!.length - 1;
-                                    if (subject.learningStatus == '요약 보기') {
+                                    if (subject.learningStatus == '학습 후') {
                                       return completedCard(
                                         subjectName: subject.subjectName,
                                         timeText:
@@ -284,7 +312,9 @@ class _StudyScreenState extends State<StudyScreen> {
                                         isLast: isLast,
                                       );
                                     } else if (subject.learningStatus ==
-                                        '녹음 시작') {
+                                            '학습 전' &&
+                                        timeValdation(subject.startTime,
+                                            subject.endTime)) {
                                       return ongoingCard(
                                         context: context,
                                         subjectName: subject.subjectName,

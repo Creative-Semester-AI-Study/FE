@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:study_helper/bottom_bar.dart';
+import 'package:study_helper/util/bottom_bar.dart';
 import 'package:study_helper/screen/summary_screens/quiz_screen.dart';
 import 'package:study_helper/theme/theme_colors.dart';
 

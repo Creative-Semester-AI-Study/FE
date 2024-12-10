@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:study_helper/api/service/auth_service.dart';
-import 'package:study_helper/bottom_bar.dart';
+import 'package:study_helper/util/bottom_bar.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:study_helper/screen/login_screens/login_screen.dart';
 import 'package:study_helper/theme/theme_colors.dart';
