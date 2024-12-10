@@ -33,8 +33,8 @@ Future<List<FlSpot>> loadStatistics({
       );
 
       if (response.statusCode == 200) {
-        result.add(FlSpot(
-            month.toDouble(), response.data['monthReviewPercentage'] + 0.0));
+        result.add(FlSpot(month.toDouble(),
+            (response.data['monthReviewPercentage'] + 0.0) / 100));
       }
 
       if (onProgress != null) {

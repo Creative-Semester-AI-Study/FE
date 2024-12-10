@@ -48,7 +48,8 @@ class StatisticsScreenState extends State<StatisticsScreen> {
     try {
       studySessions = await _studySessions();
       setState(() {
-        // UI 업데이트
+        // isLoading = true;
+        // isLoaded = true;
       });
     } catch (e) {
       print('Error: $e');
@@ -62,17 +63,20 @@ class StatisticsScreenState extends State<StatisticsScreen> {
 
     try {
       final response = await dio.get(
-        '$url/quiz/recent', // API 엔드포인트를 적절히 수정해주세요
+        '$url/quiz/recent',
         options: Options(
           headers: {
-            'Authorization': '$token',
+            'Authorization': token,
           },
+          validateStatus: (_) => true,
+          contentType: Headers.jsonContentType,
+          responseType: ResponseType.json,
         ),
       );
 
       if (response.statusCode == 200) {
-        List<dynamic> data = response.data;
-        return data.map((json) => StudySession.fromJson(json)).toList();
+        Map<String, dynamic> data = response.data;
+        return [StudySession.fromJson(data)];
       } else if (response.data == 500) {
         return [];
       }

@@ -6,14 +6,6 @@ import 'package:study_helper/api/service/auth_service.dart';
 import 'package:study_helper/theme/theme_colors.dart';
 import 'package:dio/dio.dart';
 import 'package:study_helper/util/bottom_bar.dart';
-import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
-import 'package:get/get.dart';
-import 'package:study_helper/api/api_consts.dart';
-import 'package:study_helper/api/service/auth_service.dart';
-import 'package:study_helper/theme/theme_colors.dart';
-import 'package:dio/dio.dart';
-import 'package:study_helper/util/bottom_bar.dart';
 
 class Quiz {
   final int quizId;

@@ -173,6 +173,9 @@ class _SummaryOngoingScreenState extends State<SummaryOngoingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+      ),
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Center(
